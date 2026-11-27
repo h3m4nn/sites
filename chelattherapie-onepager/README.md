@@ -16,7 +16,7 @@ Stand: 01.10.2026 · nur lokal, noch nicht veröffentlicht
 | `_src/` | Build (`build.py`), Stammdaten (`stammdaten.py`), SEO und Release (`seo.py`), Templates, Vorlagen, Bild-Zuschnitt (`bilder.py`), Prüfwerkzeuge (`pruefen.mjs`, `schriften.mjs`), Vorschaubilder (`vorschau.py`) | nein |
 | `_release/` | entsteht erst mit `python _src/build.py release …`: der **einzige** Upload-Ordner | ja, nur sein Inhalt |
 | `assets/_roh/` | Rohfotos vor dem Zuschnitt | nein |
-| `_vorschau/` | Vorschaubilder der Vergleichsseite (`a-desktop.jpg`, `a-handy.jpg` usw., erzeugt mit `_src/vorschau.py`) | nein |
+| `vorschau/` | Vorschaubilder der Vergleichsseite (`a-desktop.jpg`, `a-handy.jpg` usw., erzeugt mit `_src/vorschau.py`) | nein |
 | `_sicherung/` | Stand vor dem Feinschliff | nein |
 
 **Hinweis zur „robots.md“:** Eine Datei mit diesem Namen gibt es nicht als Standard. Für die KI-Optimierung sind **`llms.txt`** (Zusammenfassung für Sprachmodelle) und **`robots.txt`** (Zugriffsfreigabe für KI-Crawler) gebräuchlich. Beide werden erzeugt, dazu die Markdown-Version `index.md`.
@@ -77,7 +77,7 @@ Ohne `--probe` bricht der Release ab, solange `DOMAIN` der Platzhalter ist, in `
 | `_src/robots.src.txt`, `llms.src.txt`, `sitemap.src.xml`, `index.src.md` | von Hand | Vorlagen mit `{{PLATZHALTERN}}`, Domain und Kontakt stehen nicht darin |
 | robots.txt, llms.txt, sitemap.xml, index.md | erzeugt | im Projektordner nur zur Ansicht, live über den Release |
 
-**robots.txt:** eine einzige Gruppe: `User-agent: *` und alle benannten Suchmaschinen und KI-Bots direkt untereinander, ohne Leerzeile, darunter eine gemeinsame Regel. Grund: Nach RFC 9309 folgt ein Bot nur der Gruppe mit seinem Namen und ignoriert dann `*`. In der alten Datei hatte jeder Bot eine eigene Gruppe, dadurch galten die Sperren für `/_src/` und `/_vorschau/` für Googlebot, GPTBot und Co. gar nicht (nachgeprüft mit einem RFC-9309-Auswerter). Interne Ordner stehen gar nicht mehr darin, sie werden nicht hochgeladen. `Content-Signal: search=yes, ai-input=yes`; zu `ai-train` bewusst keine Angabe, bis die Bildrechte geklärt sind. Im Probe-Release steht `Disallow: /` für alle.
+**robots.txt:** eine einzige Gruppe: `User-agent: *` und alle benannten Suchmaschinen und KI-Bots direkt untereinander, ohne Leerzeile, darunter eine gemeinsame Regel. Grund: Nach RFC 9309 folgt ein Bot nur der Gruppe mit seinem Namen und ignoriert dann `*`. In der alten Datei hatte jeder Bot eine eigene Gruppe, dadurch galten die Sperren für `/_src/` und `/vorschau/` für Googlebot, GPTBot und Co. gar nicht (nachgeprüft mit einem RFC-9309-Auswerter). Interne Ordner stehen gar nicht mehr darin, sie werden nicht hochgeladen. `Content-Signal: search=yes, ai-input=yes`; zu `ai-train` bewusst keine Angabe, bis die Bildrechte geklärt sind. Im Probe-Release steht `Disallow: /` für alle.
 
 **llms.txt:** nach llmstxt.org: Überschrift, Kurzbeschreibung als Zitat, Pflichthinweis, Stand und Quelle, dann die Fakten als Liste, Überschriften nur vor Linklisten. Eine llms-full.txt gibt es bewusst nicht (wäre die dritte Kopie desselben Texts).
 
@@ -208,7 +208,7 @@ python _src/build.py
 python _src/vorschau.py        # alle drei; python _src/vorschau.py b nur Entwurf B
 ```
 
-`vorschau.py` nimmt mit `pruefen.mjs shots` im Klick-Modus 1440×900 und 390×844 auf (2,5 s nach dem Laden, wenn der Hero fertig ist) und schneidet mit PIL auf `_vorschau/<a|b|c>-desktop.jpg` (rund 105 KB) und `-handy.jpg` (rund 50 bis 65 KB) zu. Die älteren `_vorschau/a.jpg`, `b.jpg`, `c.jpg` und `mobil-vorher-nachher.png` nutzt die Seite nicht mehr.
+`vorschau.py` nimmt mit `pruefen.mjs shots` im Klick-Modus 1440×900 und 390×844 auf (2,5 s nach dem Laden, wenn der Hero fertig ist) und schneidet mit PIL auf `vorschau/<a|b|c>-desktop.jpg` (rund 105 KB) und `-handy.jpg` (rund 50 bis 65 KB) zu. Die älteren `vorschau/a.jpg`, `b.jpg`, `c.jpg` und `mobil-vorher-nachher.png` nutzt die Seite nicht mehr.
 
 ## Bilder im Text
 

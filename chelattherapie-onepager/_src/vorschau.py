@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 """
 Vorschaubilder für die Vergleichsseite index.html: je Entwurf der erste Bildschirm am Desktop (1440x900) und auf dem
-Handy (390x844, Touch-Emulation), als JPG nach _vorschau/<a|b|c>-desktop.jpg und -handy.jpg.
+Handy (390x844, Touch-Emulation), als JPG nach vorschau/<a|b|c>-desktop.jpg und -handy.jpg.
 
 Aufruf:  python _src/vorschau.py          alle drei Entwürfe (nacheinander, immer nur ein Chrome)
          python _src/vorschau.py b        nur Entwurf B
@@ -15,7 +15,7 @@ import pathlib, subprocess, sys, tempfile
 from PIL import Image
 
 ROOT = pathlib.Path(__file__).resolve().parent.parent
-ZIEL = ROOT / "_vorschau"
+ZIEL = ROOT / "vorschau"
 SEITEN = {"a": "entwurf-a-salbei", "b": "entwurf-b-klarheit", "c": "entwurf-c-stille"}
 GROESSEN = (("desktop", 1440, 900, 80), ("handy", 390, 844, 84))
 WARTEN = "await new Promise(r => setTimeout(r, 2500))"
@@ -48,7 +48,7 @@ def main(args):
                 bild = im.convert("RGB").crop((0, 0, w, h))
             datei = ZIEL / f"{k}-{name}.jpg"
             bild.save(datei, "JPEG", quality=q, optimize=True, progressive=True, subsampling=0 if name == "handy" else 2)
-            print(f"geschrieben: _vorschau/{datei.name} ({w}x{h}, {datei.stat().st_size // 1024} KB)")
+            print(f"geschrieben: vorschau/{datei.name} ({w}x{h}, {datei.stat().st_size // 1024} KB)")
 
 if __name__ == "__main__":
     main(sys.argv[1:])
