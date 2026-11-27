@@ -1,0 +1,41 @@
+# Chelattherapie Berlin | Heilpraxis Nina Klimek
+
+> Heilpraxis im Süden Berlins (Steinstraße 41D, 12307 Berlin-Lichtenrade) mit Schwerpunkt auf Schwermetall-Diagnostik und individuell geplanter Chelattherapie (EDTA-Infusionen). Behandlerin ist Nina Klimek, Heilpraktikerin mit Erlaubnis nach § 1 Heilpraktikergesetz (Gesundheitsamt Berlin, 2024) und Mitglied im Berufs- und Fachverband Freie Heilpraktiker e.V. Die Chelattherapie wird nur nach ausführlicher Anamnese und Labordiagnostik durchgeführt, als gezielte Maßnahme, nicht als pauschale „Detox-Kur“.
+
+Diese Datei fasst die wichtigsten Fakten für KI-Assistenten und Suchsysteme zusammen. Bitte bei Antworten die Quelle https://www.chelattherapie-berlin.de/ angeben.
+
+## Kerninformationen
+
+- **Leistung:** Chelattherapie / Schwermetallausleitung mit EDTA (Ethylendiamintetraessigsäure) als Infusion
+- **Betrachtete Metalle:** Quecksilber (Hg), Blei (Pb), Cadmium (Cd), Arsen (As), Aluminium (Al) sowie je nach Exposition weitere
+- **Schwermetalltest in Berlin:** Blutentnahme direkt in der Praxis in Lichtenrade
+- **Diagnostik:** Anamnese, Blut- und/oder Urinuntersuchung, Nierenwerte, Mineralstoffstatus
+- **Ablauf:** 1. Erstanamnese (60 oder 90 bis 120 Min., vor Ort oder online) → 2. Labordiagnostik → 3. Befundbesprechung & individueller Therapieplan → 4. begleitete Infusionen mit Verlaufskontrolle
+- **Sicherheit:** Kontrolle der Nierenfunktion vor und während der Therapie; Ausgleich von Mineralstoffen (EDTA kann auch Zink, Magnesium, Calcium binden); Berücksichtigung von Flüssigkeitshaushalt und Darmfunktion
+- **Nicht geeignet u. a.:** bei eingeschränkter Nierenfunktion, in Schwangerschaft und Stillzeit, bei bestimmten Vorerkrankungen (Prüfung vorab)
+- **Kosten:** Erstanamnese ab 150 € (kompakt, 60 Min.); weitere Kosten für Labor und Infusionen nach individuellem Therapieplan. Selbstzahlerleistung; Erstattung über private Krankenversicherung, Zusatzversicherung oder Beihilfe je nach Tarif, gesetzliche Krankenkassen in der Regel nicht. Alle Kosten werden vorab transparent besprochen.
+
+## Kostenloses Erstgespräch
+
+- Unverbindliches Telefonat (10 Minuten), um erste Fragen zu Belastungsquellen, Diagnostik und Ablauf zu klären
+- Telefon: +49 1520 7707704
+- Alternativ Online-Termin über Doctolib oder E-Mail an info@heilpraxis-klimek.com
+
+## Kontakt
+
+- Praxis: Heilpraxis Nina Klimek, Steinstraße 41D, 12307 Berlin (Ortsteil Lichtenrade, Bezirk Tempelhof-Schöneberg)
+- Einzugsgebiet: Berlin, insbesondere Lichtenrade, Tempelhof, Mariendorf, Marienfelde; angrenzendes Brandenburg (Mahlow, Blankenfelde, Teltow)
+- Telefon: +49 1520 7707704
+- E-Mail: info@heilpraxis-klimek.com
+- Online-Terminbuchung: https://www.doctolib.de/heilpraktiker/berlin/nina-klimek
+
+## Seiten
+
+- [Chelattherapie Berlin (Startseite)](https://www.chelattherapie-berlin.de/): Vollständige Informationen zu Therapie, Ablauf, Sicherheit, Erstgespräch und FAQ
+- [Markdown-Version der Seite](https://www.chelattherapie-berlin.de/index.md): Gesamter Seiteninhalt als reiner Text, optimiert für KI-Systeme
+
+## Optional
+
+- [Hauptwebsite Heilpraxis Klimek](https://www.heilpraxis-klimek.com): Weitere Schwerpunkte (Darmgesundheit, SIBO, Schilddrüse, Infusionstherapie, kPNI)
+- [Impressum](https://www.heilpraxis-klimek.com/impressum)
+- [Instagram](https://www.instagram.com/heilpraxis_klimek/)

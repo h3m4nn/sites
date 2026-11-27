@@ -1,0 +1,288 @@
+<!doctype html>
+<html lang="de">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex, nofollow">
+<title>Chelattherapie Berlin: Entwürfe</title>
+<meta name="description" content="Drei Designentwürfe für den Onepager Chelattherapie Berlin der Heilpraxis Nina Klimek, zum Vergleichen. Nicht öffentlich.">
+<link rel="icon" href="favicon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<!-- Nur für die Schriftproben: je Entwurf die Überschriften- und die Textschrift -->
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;1,400&family=Source+Sans+3:wght@400;600&family=Manrope:wght@500;700&family=IBM+Plex+Mono:wght@400&family=Marcellus&family=Figtree:wght@400;500&display=swap">
+<!--
+  Vergleichsseite, nur zum Zeigen (noindex, geht nicht live, ist nicht Teil des Release).
+  Vorschaubilder in _vorschau/<a|b|c>-desktop.jpg (1440x900) und -handy.jpg (390x844), erster Bildschirm.
+  Neu erzeugen: README, Abschnitt „Vergleichsseite und Vorschaubilder“.
+-->
+<style>
+:root{
+  --bg:#F3F2EF; --card:#FFFFFF; --ink:#16191A; --text:#33393A; --muted:#626A6C; --line:#DEDBD4; --line-2:#CBC7BE;
+  --focus:#0E5A66;
+  --ui:system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+  --gut:clamp(16px, 4.5vw, 56px); --w:1200px;
+}
+*{box-sizing:border-box}
+html{-webkit-text-size-adjust:100%; text-size-adjust:100%; scroll-behavior:smooth}
+body{margin:0; background:var(--bg); color:var(--text); font:400 16px/1.6 var(--ui)}
+img{display:block; max-width:100%; height:auto}
+a{color:inherit}
+:focus-visible{outline:2px solid var(--focus); outline-offset:3px; border-radius:4px}
+h1,h2,h3{color:var(--ink); text-wrap:balance; margin:0}
+p,li,dd{text-wrap:pretty}
+.wrap{max-width:calc(var(--w) + 2 * var(--gut)); margin:0 auto; padding:0 var(--gut)}
+.nw{white-space:nowrap}
+
+/* Kopf */
+.top{padding:clamp(40px, 7vw, 88px) 0 clamp(36px, 5vw, 64px)}
+.eyebrow{display:flex; flex-wrap:wrap; gap:6px 14px; align-items:center; margin:0 0 22px; font-size:13px; font-weight:600; letter-spacing:.08em; text-transform:uppercase; color:var(--muted)}
+.eyebrow .tag{padding:3px 10px; border:1px solid var(--line-2); border-radius:99px; letter-spacing:.06em; font-weight:500}
+.top h1{font-size:clamp(34px, 5.2vw, 60px); line-height:1.06; letter-spacing:-.025em; font-weight:650; max-width:16ch}
+.lead{max-width:62ch; margin:22px 0 0; font-size:clamp(17px, 1.5vw, 19px); line-height:1.6}
+.jump{display:flex; flex-wrap:wrap; gap:10px; margin:32px 0 0; padding:0; list-style:none}
+.jump a{display:inline-flex; align-items:center; gap:10px; min-height:44px; padding:0 18px 0 8px; border:1px solid var(--line-2); border-radius:99px; background:var(--card); text-decoration:none; font-weight:600; color:var(--ink); transition:border-color .2s}
+.jump a i{display:grid; place-items:center; width:30px; height:30px; border-radius:50%; font-style:normal; font-size:13px; color:#fff}
+@media (hover:hover){ .jump a:hover{border-color:var(--ink)} }
+
+/* Entwurf */
+.design{padding:clamp(36px, 5vw, 64px) 0; border-top:1px solid var(--line); scroll-margin-top:8px}
+/* Bühne: Browserfenster unten angeschnitten, Handy überlappt rechts (Handy rund 0,75 der Fensterhöhe) */
+.stage{position:relative; display:grid; grid-template-columns:minmax(0,1fr) minmax(0,12%); align-items:end; gap:0; padding:clamp(20px, 4.2vw, 56px) clamp(16px, 4.2vw, 56px) 0; border-radius:clamp(16px, 2vw, 24px); background:var(--stage); overflow:hidden;
+  --pr:clamp(16px, 2.4vw, 34px); --pp:clamp(4px, .55vw, 8px)}
+.browser{margin:0; border-radius:12px 12px 0 0; overflow:hidden; background:#fff; box-shadow:0 30px 60px -30px rgba(10,20,15,.45), 0 0 0 1px rgba(0,0,0,.06)}
+.browser .bar{display:flex; align-items:center; gap:7px; height:34px; padding:0 14px; background:#ECEBE8; border-bottom:1px solid rgba(0,0,0,.06)}
+.browser .bar i{width:10px; height:10px; border-radius:50%; background:#CFCCC6}
+.browser .bar span{flex:0 1 auto; min-width:0; margin-left:12px; padding:3px 12px; border-radius:6px; background:#fff; font-size:12px; color:#6B7072; white-space:nowrap; overflow:hidden; text-overflow:ellipsis}
+.phone{position:relative; z-index:1; margin:0 0 clamp(20px, 3vw, 40px) clamp(-100px, -5.5vw, -24px); padding:var(--pp); border-radius:var(--pr); background:#121514; box-shadow:0 30px 60px -24px rgba(0,0,0,.55), inset 0 0 0 1px rgba(255,255,255,.1)}
+.phone img{border-radius:calc(var(--pr) - var(--pp))}
+.design figcaption{position:absolute; width:1px; height:1px; overflow:hidden; clip-path:inset(50%)}
+
+.info{display:grid; grid-template-columns:minmax(0,5fr) minmax(0,4fr) minmax(0,3fr); gap:clamp(28px, 4vw, 56px); margin-top:clamp(28px, 3.5vw, 44px)}
+.kicker{margin:0 0 8px; font-size:13px; font-weight:600; letter-spacing:.1em; text-transform:uppercase; color:var(--muted)}
+.info h2{font-size:clamp(28px, 3vw, 38px); line-height:1.1; letter-spacing:-.02em; font-weight:650}
+.info h2 small{display:block; margin-top:6px; font-size:clamp(17px, 1.5vw, 19px); font-weight:500; letter-spacing:0; color:var(--muted)}
+.info .text p{margin:16px 0 0; max-width:52ch}
+.btn{display:inline-flex; align-items:center; justify-content:center; gap:10px; min-height:48px; margin-top:24px; padding:0 22px; border-radius:99px; background:var(--accent); color:#fff; text-decoration:none; font-weight:600; transition:filter .2s}
+@media (hover:hover){ .btn:hover{filter:brightness(1.12)} }
+.btn svg{flex:none}
+.facts{margin:0; display:grid; gap:18px; align-content:start}
+.facts div{padding-top:14px; border-top:1px solid var(--line)}
+.facts dt{font-size:12.5px; font-weight:600; letter-spacing:.08em; text-transform:uppercase; color:var(--muted)}
+.facts dd{margin:4px 0 0}
+.spec{display:flex; align-items:baseline; gap:16px; margin-top:6px}
+.spec b{font-weight:inherit; font-size:44px; line-height:1; color:var(--ink)}
+.spec span{display:block; line-height:1.35}
+.spec span em{font-style:normal; color:var(--muted); font-size:14px}
+.colors h3{font:600 12.5px/1.6 var(--ui); letter-spacing:.08em; text-transform:uppercase; color:var(--muted); padding-top:14px; border-top:1px solid var(--line)}
+.sw{list-style:none; margin:10px 0 0; padding:0; display:grid; gap:8px}
+.sw li{display:flex; align-items:center; gap:12px; font-size:15px}
+.sw i{flex:none; width:30px; height:30px; border-radius:50%; box-shadow:inset 0 0 0 1px rgba(0,0,0,.12)}
+.sw code{margin-left:auto; font:13px/1 ui-monospace, "Cascadia Mono", Consolas, monospace; color:var(--muted)}
+
+/* Gemeinsame Basis */
+.common{padding:clamp(40px, 6vw, 80px) 0; border-top:1px solid var(--line)}
+.common h2{font-size:clamp(26px, 2.6vw, 34px); letter-spacing:-.02em; font-weight:650}
+.common > .wrap > p{max-width:62ch; margin:14px 0 0}
+.grid{list-style:none; margin:32px 0 0; padding:0; display:grid; grid-template-columns:repeat(3, minmax(0,1fr)); gap:16px}
+.grid li{padding:22px 24px 24px; border-radius:16px; background:var(--card); border:1px solid var(--line)}
+.grid h3{font-size:17px; line-height:1.3; font-weight:650}
+.grid p{margin:8px 0 0; font-size:15px; line-height:1.55}
+.open{margin-top:16px; padding:22px 24px; border-radius:16px; border:1px dashed var(--line-2)}
+.open h3{font-size:17px; font-weight:650}
+.open ul{margin:10px 0 0; padding-left:20px}
+.files{display:flex; flex-wrap:wrap; gap:8px 10px; margin:28px 0 0; padding:0; list-style:none}
+.files a{display:inline-flex; align-items:center; min-height:44px; padding:0 14px; border-radius:10px; background:var(--card); border:1px solid var(--line); font:14px/1 ui-monospace, "Cascadia Mono", Consolas, monospace; color:var(--ink); text-decoration:none}
+@media (hover:hover){ .files a:hover{border-color:var(--ink)} }
+footer{padding:28px 0 48px; border-top:1px solid var(--line); font-size:14px; color:var(--muted)}
+
+/* Tablet */
+@media (max-width:1020px){
+  .info{grid-template-columns:minmax(0,1fr) minmax(0,1fr)}
+  .info .text{grid-column:1 / -1}
+  .grid{grid-template-columns:repeat(2, minmax(0,1fr))}
+}
+/* Handy */
+@media (max-width:640px){
+  /* Fenster volle Breite, Handy unten rechts darüber (Prozent-Ränder beziehen sich hier auf die volle Breite) */
+  .stage{grid-template-columns:minmax(0,1fr); padding:18px 16px 18px; --pr:20px; --pp:4px}
+  .browser{border-radius:8px}
+  .browser .bar{height:22px; gap:5px; padding:0 10px}
+  .browser .bar i{width:7px; height:7px}
+  .browser .bar span{display:none}
+  .phone{width:34%; justify-self:end; margin:-30% 3% 0 0}
+  .info{grid-template-columns:minmax(0,1fr); gap:24px}
+  .btn{width:100%}
+  .spec b{font-size:38px}
+  .grid{grid-template-columns:minmax(0,1fr)}
+}
+@media (prefers-reduced-motion:reduce){ html{scroll-behavior:auto} *{transition:none!important} }
+</style>
+</head>
+<body>
+
+<header class="top">
+  <div class="wrap">
+    <p class="eyebrow"><span>Heilpraxis Nina Klimek</span><span class="tag">Onepager Chelattherapie Berlin</span></p>
+    <h1>Drei Entwürfe, ein Inhalt.</h1>
+    <p class="lead">Alle drei Entwürfe zeigen denselben Text, dieselben Bilder und dieselbe technische Basis. Sie unterscheiden sich in Bildsprache, Typografie und Aufbau. Texte und Fotos sind Platzhalter. Positionen, Bildformate, Schriften und Schriftgrößen sind so gesetzt, wie sie live gehen sollen.</p>
+    <ul class="jump" aria-label="Zu den Entwürfen">
+      <li><a href="#entwurf-a"><i style="background:#34453A">A</i>Salbei</a></li>
+      <li><a href="#entwurf-b"><i style="background:#0E5A66">B</i>Klarheit</a></li>
+      <li><a href="#entwurf-c"><i style="background:#101814">C</i>Stille</a></li>
+    </ul>
+  </div>
+</header>
+
+<main>
+<!-- ===================================================== A -->
+<section class="design" id="entwurf-a" aria-labelledby="h-a" style="--stage:#E6DFCF; --accent:#34453A">
+  <div class="wrap">
+    <div class="stage">
+      <figure class="browser">
+        <div class="bar" aria-hidden="true"><i></i><i></i><i></i><span>entwurf-a-salbei.html</span></div>
+        <img src="_vorschau/a-desktop.jpg" width="1440" height="900" alt="Entwurf A Salbei am Desktop, erster Bildschirm: Überschrift links, Porträt im Bogen rechts">
+      </figure>
+      <figure class="phone">
+        <img src="_vorschau/a-handy.jpg" width="390" height="844" alt="Entwurf A Salbei auf dem Handy, erster Bildschirm">
+      </figure>
+    </div>
+    <div class="info">
+      <div class="text">
+        <p class="kicker">Entwurf A</p>
+        <h2 id="h-a">Salbei <small>warm und editorial</small></h2>
+        <p>Cremetöne, Salbeigrün und eine elegante Antiqua mit kursiven Akzenten. Das Porträt steht im Bogen, daneben eine Namenskarte mit Adresse. Wirkt wie eine hochwertige Privatpraxis: nahbar, ruhig und vertrauensvoll.</p>
+        <a class="btn" href="entwurf-a-salbei.html">Entwurf A öffnen <svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="1.6"/></svg></a>
+      </div>
+      <dl class="facts">
+        <div><dt>Schrift</dt><dd class="spec"><b style="font-family:'Cormorant Garamond', Georgia, serif; font-weight:500">Aa</b><span><span style="font-family:'Cormorant Garamond', Georgia, serif; font-size:20px; font-weight:500">Cormorant Garamond</span><em>Überschriften</em><span style="font-family:'Source Sans 3', var(--ui)">Source Sans 3</span><em>Text</em></span></dd></div>
+        <div><dt>Einstieg</dt><dd>Porträt im Bogen mit Namenskarte, darunter die Vertrauenszeile</dd></div>
+        <div><dt>Eigenheiten</dt><dd>Karte „Kurz erklärt“, Metall-Kacheln, dunkle Karte für das Erstgespräch</dd></div>
+      </dl>
+      <div class="colors">
+        <h3>Farben</h3>
+        <ul class="sw">
+          <li><i style="background:#F5F1E8"></i>Creme <code>#F5F1E8</code></li>
+          <li><i style="background:#6B7F6A"></i>Salbei <code>#6B7F6A</code></li>
+          <li><i style="background:#34453A"></i>Tannengrün <code>#34453A</code></li>
+          <li><i style="background:#A2855A"></i>Gold <code>#A2855A</code></li>
+          <li><i style="background:#1E2621"></i>Tinte <code>#1E2621</code></li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===================================================== B -->
+<section class="design" id="entwurf-b" aria-labelledby="h-b" style="--stage:#DCEAE9; --accent:#0E5A66">
+  <div class="wrap">
+    <div class="stage">
+      <figure class="browser">
+        <div class="bar" aria-hidden="true"><i></i><i></i><i></i><span>entwurf-b-klarheit.html</span></div>
+        <img src="_vorschau/b-desktop.jpg" width="1440" height="900" alt="Entwurf B Klarheit am Desktop, erster Bildschirm: Überschrift links, Periodensystem-Kacheln rechts" loading="lazy" decoding="async">
+      </figure>
+      <figure class="phone">
+        <img src="_vorschau/b-handy.jpg" width="390" height="844" alt="Entwurf B Klarheit auf dem Handy, erster Bildschirm" loading="lazy" decoding="async">
+      </figure>
+    </div>
+    <div class="info">
+      <div class="text">
+        <p class="kicker">Entwurf B</p>
+        <h2 id="h-b">Klarheit <small>modern und medizinisch</small></h2>
+        <p>Weiß, Petrol und eine präzise Grotesk mit Laborakzenten in Monospace. Statt eines Porträts öffnen Periodensystem-Kacheln die Seite, darunter vier Kennzahlen. Betont Diagnostik und Fachlichkeit und wirkt von den drei Entwürfen am klinischsten.</p>
+        <a class="btn" href="entwurf-b-klarheit.html">Entwurf B öffnen <svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="1.6"/></svg></a>
+      </div>
+      <dl class="facts">
+        <div><dt>Schrift</dt><dd class="spec"><b style="font-family:Manrope, var(--ui); font-weight:700; letter-spacing:-.03em">Aa</b><span><span style="font-family:Manrope, var(--ui); font-size:19px; font-weight:700">Manrope</span><em>Überschriften und Text</em><span style="font-family:'IBM Plex Mono', ui-monospace, monospace; font-size:15px">IBM Plex Mono</span><em>Laborakzente</em></span></dd></div>
+        <div><dt>Einstieg</dt><dd>Periodensystem-Kacheln, Kennzahlenleiste, Kontaktzeile über dem Header</dd></div>
+        <div><dt>Eigenheiten</dt><dd>Steckbrief, Zeitleiste für den Ablauf, Tabelle mit Quellen</dd></div>
+      </dl>
+      <div class="colors">
+        <h3>Farben</h3>
+        <ul class="sw">
+          <li><i style="background:#FFFFFF"></i>Weiß <code>#FFFFFF</code></li>
+          <li><i style="background:#DCEAE9"></i>Mint <code>#DCEAE9</code></li>
+          <li><i style="background:#0E5A66"></i>Petrol <code>#0E5A66</code></li>
+          <li><i style="background:#B0714A"></i>Kupfer <code>#B0714A</code></li>
+          <li><i style="background:#10212A"></i>Tinte <code>#10212A</code></li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===================================================== C -->
+<section class="design" id="entwurf-c" aria-labelledby="h-c" style="--stage:#1E2A24; --accent:#101814">
+  <div class="wrap">
+    <div class="stage">
+      <figure class="browser">
+        <div class="bar" aria-hidden="true"><i></i><i></i><i></i><span>entwurf-c-stille.html</span></div>
+        <img src="_vorschau/c-desktop.jpg" width="1440" height="900" alt="Entwurf C Stille am Desktop, erster Bildschirm: Überschrift links auf Dunkel, großes Porträt rechts" loading="lazy" decoding="async">
+      </figure>
+      <figure class="phone">
+        <img src="_vorschau/c-handy.jpg" width="390" height="844" alt="Entwurf C Stille auf dem Handy, erster Bildschirm" loading="lazy" decoding="async">
+      </figure>
+    </div>
+    <div class="info">
+      <div class="text">
+        <p class="kicker">Entwurf C</p>
+        <h2 id="h-c">Stille <small>dunkel und premium</small></h2>
+        <p>Tiefes Waldgrün, Champagner-Gold und eine klassische Antiqua. Das große Porträt füllt die rechte Seite, dunkle und helle Flächen wechseln sich ab. Die exklusivste Anmutung der drei, ähnlich einer Private Clinic.</p>
+        <a class="btn" href="entwurf-c-stille.html">Entwurf C öffnen <svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="1.6"/></svg></a>
+      </div>
+      <dl class="facts">
+        <div><dt>Schrift</dt><dd class="spec"><b style="font-family:Marcellus, Georgia, serif">Aa</b><span><span style="font-family:Marcellus, Georgia, serif; font-size:20px">Marcellus</span><em>Überschriften</em><span style="font-family:Figtree, var(--ui)">Figtree</span><em>Text und Versalien</em></span></dd></div>
+        <div><dt>Einstieg</dt><dd>Großes Porträt rechts, auf dem Handy randlos über der Überschrift</dd></div>
+        <div><dt>Eigenheiten</dt><dd>Name mittig im Header, feine Goldlinien, ruhiger Zoom des Porträts</dd></div>
+      </dl>
+      <div class="colors">
+        <h3>Farben</h3>
+        <ul class="sw">
+          <li><i style="background:#101814"></i>Nacht <code>#101814</code></li>
+          <li><i style="background:#C9B27C"></i>Champagner <code>#C9B27C</code></li>
+          <li><i style="background:#F3EFE7"></i>Creme <code>#F3EFE7</code></li>
+          <li><i style="background:#9C8651"></i>Altgold <code>#9C8651</code></li>
+          <li><i style="background:#ECE6DA"></i>Elfenbein <code>#ECE6DA</code></li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===================================================== Gemeinsam -->
+<section class="common" aria-labelledby="h-common">
+  <div class="wrap">
+    <h2 id="h-common">In allen drei Entwürfen gleich</h2>
+    <p>Die Unterschiede liegen nur in der Gestaltung. Bedienung, Inhalt und Technik sind identisch, ganz gleich, für welchen Entwurf Sie sich entscheiden.</p>
+    <ul class="grid">
+      <li><h3>Handy zuerst</h3><p>Geprüft von 320 bis 1920&nbsp;px, auf Tablet und im Querformat. Auf dem Handy bleibt eine Leiste mit „Anrufen“ und „Termin buchen“ erreichbar, solange kein eigener Kontaktbereich zu sehen ist.</p></li>
+      <li><h3>Anruf mit einem Tipp</h3><p>Auf dem Handy ruft „Kostenloses Erstgespräch“ direkt an. Am Rechner kopiert der Anruf-Button die Nummer, die groß daneben steht.</p></li>
+      <li><h3>Ruhige Bewegung</h3><p>Abschnitte blenden dezent ein, nur über Deckkraft und Verschiebung, ohne Ruckeln. Wer am Gerät „Bewegung reduzieren“ eingestellt hat, sieht alles sofort und ohne Animation.</p></li>
+      <li><h3>Barrierearm</h3><p>Kontraste nach WCAG AA, Tippflächen ab 44&nbsp;px, vollständig per Tastatur bedienbar. Menü, Fragen und neue Tabs werden für Screenreader angesagt.</p></li>
+      <li><h3>Für Suchmaschinen und KI</h3><p>Dieselben Meta-Tags und strukturierten Daten (Praxis, Person, Therapie, 13 Fragen und Antworten), dazu robots.txt, llms.txt, eine Markdown-Fassung und eine Sitemap.</p></li>
+      <li><h3>Navigation</h3><p>Das Menü markiert den Abschnitt, in dem Sie gerade lesen. Auf Tablet und Handy öffnet es sich als Liste, Escape und ein Tipp daneben schließen es.</p></li>
+    </ul>
+    <div class="open">
+      <h3>Vor dem Go-live noch offen</h3>
+      <ul>
+        <li>Echte Fotos in ausreichender Auflösung (die jetzigen sind Platzhalter)</li>
+        <li>Freigabe der Texte durch Nina Klimek, eigenes Impressum und Datenschutz</li>
+        <li>Schriften lokal einbinden statt über Google Fonts, Domain festlegen</li>
+      </ul>
+    </div>
+    <ul class="files" aria-label="Gemeinsame Dateien">
+      <li><a href="robots.txt">robots.txt</a></li>
+      <li><a href="llms.txt">llms.txt</a></li>
+      <li><a href="index.md">index.md</a></li>
+      <li><a href="sitemap.xml">sitemap.xml</a></li>
+      <li><a href="README.md">README.md</a></li>
+    </ul>
+  </div>
+</section>
+</main>
+
+<footer>
+  <div class="wrap">Nur zum Vergleichen, nicht öffentlich und nicht Teil des Uploads. Stand: <time datetime="2026-10-01">1. Oktober 2026</time></div>
+</footer>
+</body>
+</html>

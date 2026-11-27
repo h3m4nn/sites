@@ -1,0 +1,40 @@
+# Chelattherapie Berlin: {{PRAXIS}}
+
+> Heilpraxis in Berlin-{{DISTRICT}} ({{STREET}}, {{ZIP}} {{CITY}}) mit Schwerpunkt Schwermetall-Diagnostik und individuell geplanter Chelattherapie mit EDTA-Infusionen. Behandlerin ist Nina Klimek, Heilpraktikerin mit Erlaubnis nach § 1 Heilpraktikergesetz (Gesundheitsamt Berlin, 2024) und Mitglied im Berufs- und Fachverband Freie Heilpraktiker e.V. Die Chelattherapie wird nur nach ausführlicher Anamnese und Labordiagnostik durchgeführt, als gezielte Maßnahme, nicht als pauschale „Detox-Kur“.
+
+Stand: {{UPDATED_DE}} · Quelle: {{DOMAIN}}/
+
+- **Leistung:** Chelattherapie (Schwermetallausleitung) mit EDTA (Ethylendiamintetraessigsäure) als langsame Infusion
+- **Betrachtete Metalle:** Quecksilber (Hg), Blei (Pb), Cadmium (Cd), Arsen (As) und Aluminium (Al), je nach Exposition weitere
+- **Schwermetalltest in Berlin:** Labordiagnostik aus Blut und/oder Urin, gezielt geplant nach der Erstanamnese; die Blutentnahme erfolgt direkt in der Praxis in {{DISTRICT}}
+- **Ablauf:**
+  1. Erstanamnese (60 oder 90 bis 120 Minuten, vor Ort oder online)
+  2. Labordiagnostik mit Nierenwerten und Mineralstoffstatus
+  3. Befundbesprechung und individueller Therapieplan
+  4. Begleitete Infusionen mit Verlaufskontrolle
+- **Sicherheit:** Kontrolle der Nierenfunktion vor und während der Therapie; gezielter Ausgleich von Mineralstoffen, da EDTA auch Zink, Magnesium und Calcium binden kann; Flüssigkeitshaushalt und Darmfunktion werden berücksichtigt
+- **Nicht geeignet u. a.:** bei eingeschränkter Nierenfunktion, in Schwangerschaft und Stillzeit sowie bei bestimmten Vorerkrankungen und Medikamenten; die Eignung wird vorab geprüft
+- **Kosten:** Erstanamnese ab 150 € (kompakt, 60 Minuten); Labor und Infusionen nach individuellem Therapieplan, vorab transparent besprochen. Selbstzahlerleistung; private Krankenversicherung, Zusatzversicherung oder Beihilfe erstatten je nach Tarif ganz oder teilweise, gesetzliche Krankenkassen in der Regel nicht
+- **Kostenloses Erstgespräch:** unverbindliches Telefonat (10 Minuten) zu möglichen Belastungsquellen, Diagnostik und Ablauf
+- **Praxis:** {{PRAXIS}}, {{STREET}}, {{ZIP}} {{CITY}} (Ortsteil {{DISTRICT}}, Bezirk {{BEZIRK}})
+- **Telefon:** {{PHONE_READ}} (national {{PHONE_DE}})
+- **E-Mail:** {{EMAIL}}
+- **Einzugsgebiet:** Berlin, besonders Lichtenrade, Tempelhof, Mariendorf und Marienfelde; angrenzendes Brandenburg (Mahlow, Blankenfelde, Teltow)
+
+## Seite
+
+- [Chelattherapie Berlin]({{DOMAIN}}/): Therapie, Metalle, Ablauf, Sicherheit, Erstgespräch, Über mich, häufige Fragen und Kontakt
+- [Seiteninhalt als Markdown]({{DOMAIN}}/index.md): vollständiger Text der Seite mit allen {{FAQ_COUNT}} Fragen und Antworten
+
+## Termin und Anfahrt
+
+- [Online-Termin bei Doctolib]({{DOCTOLIB}}): Erstanamnese vor Ort oder online buchen
+- [Route zur Praxis]({{MAPS}}): {{STREET}}, {{ZIP}} {{CITY}}
+
+## Optional
+
+- [Hauptwebsite Heilpraxis Klimek]({{MAIN_SITE}}): weitere Schwerpunkte (Darmgesundheit, SIBO, Schilddrüse, Infusionstherapie, kPNI)
+- [Über Nina Klimek]({{UEBER_MICH}}): Werdegang und Qualifikationen
+- [Impressum]({{IMPRESSUM}})
+- [Datenschutz]({{DATENSCHUTZ}})
+- [Instagram]({{INSTAGRAM}})

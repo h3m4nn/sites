@@ -1,0 +1,832 @@
+<!doctype html>
+<html lang="de">
+<head>
+<!--build {"fonts": "https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500&display=swap",
+  "theme": "#FFFFFF",
+  "preload": null} -->
+{{HEAD}}
+<style>
+/* schriften:start  Ersatzschriften mit gemessenen Metriken gegen Layout-Sprünge beim Nachladen (CLS).
+   Automatisch erzeugt von: node _src/schriften.mjs entwurf-b-klarheit.html --schreiben (nicht von Hand ändern) */
+@font-face{font-family:"Manrope Fallback"; font-weight:400 500; src:local("Arial"), local("ArialMT"); size-adjust:102.64%; ascent-override:104.25%; descent-override:29.23%; line-gap-override:0%; unicode-range:{{LATIN}}}
+@font-face{font-family:"Manrope Fallback"; font-weight:600 700; src:local("Arial Bold"), local("Arial-BoldMT"); size-adjust:98.65%; ascent-override:108.47%; descent-override:30.41%; line-gap-override:0%; unicode-range:{{LATIN}}}
+/* schriften:ende */
+
+/* ================================================================ System
+   Farben: Akzente haben eine Textvariante (-ink), Deko-Linien behalten den Originalton.
+   Typo unter 20 px nur in fünf Stufen: xs 12,5 (Mono-Labels, Meta, Bildunterschriften) · sm 14,5 · s 16 · base 17 · m 18,5.
+   Rollen: lead (Hero) ≥ sub (Abschnittseinleitung) ≥ base (Fließtext); schmale Handys und quer rücken alle eine Stufe tiefer.
+   Radien: sm 10 (Buttons, Icon-Kacheln) · r 14 (Karten, Bilder, Kacheln) · lg 22 (große Flächen).
+   Raster: ein Container, fluider Seitenrand, eine Spaltenlücke; Zweispalter als 5/7, 6/6 oder 7/5. */
+:root{
+  --bg:#FFFFFF; --soft:#F3F6F6; --ink:#10212A; --muted:#55656D; --petrol:#0E5A66; --petrol-deep:#0A3F48;
+  --mint:#DCEAE9; --line:#E1E8EA; --line-mid:#C9D6D9; --line-strong:#A9BBC0; --copper:#B0714A; --copper-ink:#955A36;
+  --on-dark-2:#BFDCDC; --on-dark-3:#A9D2D3; --focus:var(--copper); --focus-dark:#F2C9A8;
+  --nav-scrim:rgba(10,40,48,.34);
+  --sans:"Manrope", "Manrope Fallback", system-ui, -apple-system, "Segoe UI", sans-serif;
+  --mono:"IBM Plex Mono", ui-monospace, "Cascadia Mono", monospace;
+  --t-xs:12.5px; --t-sm:14.5px; --t-s:16px; --t-base:17px; --t-m:18.5px;
+  --t-lead:20px; --t-sub:var(--t-m); --t-quote:21px; --t-h3:20px; --track:.06em;
+  --h1:clamp(44px,4vw,56px); --h2:clamp(32px,2.9vw,42px);
+  --content:1152px; --gutter:clamp(16px,4.4vw,56px); --gap:clamp(40px,5vw,72px);
+  --sec:clamp(96px,7.5vw,120px); --head-gap:56px; --bar:74px;
+  --r-sm:10px; --r:14px; --r-lg:22px;
+}
+@media (min-width:1600px){:root{--content:1240px; --h1:60px; --h2:44px}}
+@media (max-width:1020px){:root{--h1:clamp(40px,5.4vw,52px); --h2:clamp(30px,3.5vw,36px); --t-h3:18.5px; --t-quote:20px; --sec:88px; --head-gap:44px; --bar:68px}}
+@media (max-width:640px){:root{--h1:clamp(32px,9.4vw,40px); --h2:clamp(24px,7vw,29px); --t-lead:18.5px; --t-sub:17px; --t-quote:18.5px; --sec:64px; --head-gap:32px; --gutter:16px; --gap:28px; --bar:60px}}
+@media (max-width:374px){:root{--t-base:16px; --t-lead:17px; --t-sub:16px}}
+@media (max-width:359px){:root{--t-lead:16px}}
+@media (orientation:landscape) and (max-height:500px) and (min-width:641px){:root{--h1:32px; --h2:24px; --t-base:16px; --t-lead:17px; --t-sub:16px; --t-quote:18.5px; --t-h3:17px; --sec:56px; --head-gap:28px; --bar:56px}}
+
+*{box-sizing:border-box}
+html{scroll-behavior:smooth; scroll-padding-top:calc(var(--bar) + 24px)}
+body{margin:0; background:var(--bg); color:var(--ink); font:400 var(--t-base)/1.65 var(--sans); -webkit-font-smoothing:antialiased}
+img{max-width:100%; display:block}
+a{color:var(--petrol); text-underline-offset:.2em}
+h1,h2,h3{font-weight:600; letter-spacing:-.025em; margin:0}
+h2{font-size:var(--h2); line-height:1.12}
+h3{font-size:var(--t-h3); line-height:1.3; letter-spacing:-.015em}
+p{margin:0 0 1em}
+.wrap{max-width:calc(var(--content) + 2 * var(--gutter)); margin:0 auto; padding-left:max(var(--gutter), env(safe-area-inset-left)); padding-right:max(var(--gutter), env(safe-area-inset-right))}
+.label{display:flex; flex-wrap:wrap; align-items:center; gap:4px 10px; margin:0 0 18px; font:500 var(--t-xs)/1.3 var(--mono); letter-spacing:var(--track); text-transform:uppercase; white-space:nowrap; color:var(--petrol)}
+.label i{font-style:normal; color:var(--copper-ink)}
+.skip{position:absolute; left:-9999px}
+.skip:focus{left:16px; top:16px; background:var(--ink); color:#fff; padding:10px 14px; z-index:100}
+#inhalt:focus{outline:none}
+:focus-visible{outline:2px solid var(--focus); outline-offset:3px}
+.strip :focus-visible,.callbox :focus-visible,.contact-card :focus-visible{outline-color:var(--focus-dark)}
+
+/* ================================================================ Topbar + Header */
+.strip{background:var(--petrol-deep); color:#CFE1E2; font-size:var(--t-sm); line-height:1.4}
+.strip .wrap{display:flex; justify-content:space-between; align-items:center; gap:20px; min-height:38px}
+.strip a{color:#fff; text-decoration:none}
+/* Deckend weiß auf allen Geräten: keine graue Trübung über dunklen Flächen (Kontaktkarte), kein Blur-Nachzeichnen beim Scrollen */
+header.site{position:sticky; top:0; z-index:50; background:#fff; border-bottom:1px solid var(--line)}
+.bar{display:flex; align-items:center; justify-content:space-between; gap:16px; height:var(--bar)}
+.brand{display:flex; align-items:center; gap:12px; min-height:44px; text-decoration:none; color:var(--ink)}
+.brand svg{flex:none; width:38px; height:38px}
+.brand b{display:block; font-size:var(--t-base); font-weight:700; letter-spacing:-.01em; line-height:1.2}
+.brand .sub{display:block; margin-top:1px; font-size:var(--t-xs); line-height:1.3; color:var(--muted)}
+nav.main{display:flex; align-items:center; gap:clamp(20px,2.2vw,32px)}
+nav.main a{padding:10px 0; font-size:var(--t-sm); font-weight:500; color:var(--muted); text-decoration:none}
+nav.main a.m-only{display:none}
+nav.main a[aria-current]:not(.btn){color:var(--ink); box-shadow:inset 0 -2px 0 var(--copper)}
+header .head-cta{display:none}
+/* Langsames Netz: Der Browser zeichnet teils schon, bevor die Navigation fertig geparst ist; die rechtsbündigen Links
+   rückten dann beim Nachladen um bis zu 375 px (gemessen CLS 0,0096 bei 1024 unter Slow 4G). Bis der letzte Eintrag da ist, bleibt sie unsichtbar */
+nav.main:not(:has(> .btn)){visibility:hidden}
+nav.main .btn{min-height:44px; margin-left:4px; padding:0 18px; font-size:var(--t-sm); color:#fff}
+.menu-btn{color:var(--petrol-deep); border-color:var(--line-strong); border-radius:var(--r-sm)}
+
+/* ================================================================ Buttons */
+.btn{display:inline-flex; align-items:center; justify-content:center; gap:10px; min-height:52px; padding:0 24px; border-radius:var(--r-sm); font:600 var(--t-s)/1.2 var(--sans); letter-spacing:-.005em; text-decoration:none; cursor:pointer; transition:background-color .2s, color .2s, box-shadow .2s}
+.btn svg{flex:none}
+.btn-primary{background:var(--petrol); color:#fff}
+.btn-ghost{background:#fff; color:var(--ink); box-shadow:inset 0 0 0 1px var(--line-strong)}
+.btn:active{transform:translateY(1px)}
+.btn-primary:active{background:var(--petrol-deep)}
+.btn-ghost:active{background:var(--mint)}
+@media (hover:hover){
+  nav.main a:not(.btn):hover{color:var(--ink)}
+  .strip a:hover{text-decoration:underline}
+  .btn-primary:hover{background:var(--petrol-deep)}
+  .btn-ghost:hover{background:var(--mint); box-shadow:inset 0 0 0 1px var(--mint)}
+}
+
+/* ================================================================ Hero */
+.hero{padding:clamp(56px,6vw,88px) 0 clamp(64px,7vw,104px); background:radial-gradient(760px 520px at calc(50% + min(25vw, 370px)) 45%, #EAF3F2 0%, rgba(234,243,242,0) 68%), var(--bg)}
+.hero-grid{display:grid; grid-template-columns:minmax(0,7fr) minmax(0,5fr); gap:var(--gap); align-items:center}
+.hero h1{font-size:var(--h1); line-height:1.06; letter-spacing:-.035em}
+.hero h1 span{display:block; color:var(--petrol)}
+.hero .lead{max-width:30em; margin:24px 0 32px; font-size:var(--t-lead); line-height:1.5; color:var(--muted)}
+.cta-row{display:flex; flex-wrap:wrap; gap:12px}
+/* Periodensystem-Kacheln */
+.table{display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:12px}
+.el{aspect-ratio:1; display:flex; flex-direction:column; justify-content:space-between; padding:14px 12px 12px 14px; background:#fff; border:1px solid var(--line); border-radius:var(--r); box-shadow:0 1px 2px rgba(16,33,42,.04)}
+.el small{font:500 var(--t-xs)/1 var(--mono); color:var(--muted)}
+.el b{font-size:clamp(32px,3.1vw,44px); font-weight:600; line-height:1; letter-spacing:-.03em; color:var(--petrol-deep)}
+.el span{display:flex; align-items:flex-end; min-height:2.5em; font-size:var(--t-sm); line-height:1.25; color:var(--muted)}
+.el.hl{background:var(--petrol); border-color:var(--petrol)}
+.el.hl b,.el.hl small,.el.hl span{color:#fff}
+.el.more{background:var(--soft); border-style:dashed; border-color:var(--line-mid)}
+.el.more b{color:var(--copper)}
+.table-cap{grid-column:1 / -1; margin:6px 0 0; font:400 var(--t-xs)/1.5 var(--mono); color:var(--muted)}
+/* Kacheln erscheinen beim Laden nacheinander (nur transform/opacity, Startzustand per backwards ab dem ersten Frame) */
+@media (prefers-reduced-motion:no-preference){
+  .table .el{animation:tile .6s cubic-bezier(.2,.7,.2,1) backwards}
+  .table .el:nth-child(2){animation-delay:.08s} .table .el:nth-child(3){animation-delay:.16s}
+  .table .el:nth-child(4){animation-delay:.24s} .table .el:nth-child(5){animation-delay:.32s} .table .el:nth-child(6){animation-delay:.4s}
+}
+@keyframes tile{from{opacity:0; transform:translateY(12px)}to{opacity:1; transform:none}}
+
+/* ================================================================ Kennzahlen */
+.facts-grid{display:grid; grid-template-columns:repeat(4,minmax(0,1fr)); border-top:1px solid var(--line); border-bottom:1px solid var(--line)}
+.fact{padding:30px 24px 30px 0}
+.fact + .fact{padding-left:24px; border-left:1px solid var(--line)}
+.fact b{display:block; font-size:clamp(24px,2.3vw,30px); font-weight:600; line-height:1.15; letter-spacing:-.03em}
+.fact > span{display:block; margin-top:6px; font-size:var(--t-sm); line-height:1.5; color:var(--muted); text-wrap:balance}
+
+/* ================================================================ Abschnitte */
+section{padding:var(--sec) 0}
+.soft{background:var(--soft); --line:#D6E0E2}
+.sec-head{max-width:720px; margin-bottom:var(--head-gap)}
+.sec-head .sub,.callnow .sub{max-width:31em; margin:16px 0 0; font-size:var(--t-sub); line-height:1.55; color:var(--muted)}
+/* Kurze Unterzeilen (höchstens 3 Zeilen) ausgeglichen. Nicht global: lange Unterzeilen (Metalle, mobil über 6 Zeilen)
+   fielen sonst auf normalen Umbruch ohne pretty zurück. Achtung: Ein .nw-Span im Absatz schaltet balance in Chrome ab,
+   deshalb dort Wortverbinder (&#8288; nach dem Bindestrich) bzw. &nbsp; statt .nw */
+.glance .sub,.faq-grid .sub{text-wrap:balance}
+
+/* Auf einen Blick */
+.glance{display:grid; grid-template-columns:minmax(0,5fr) minmax(0,7fr); gap:var(--gap); align-items:start}
+.glance .sec-head{margin:0; position:sticky; top:calc(var(--bar) + 40px)}
+.spec{margin:0; background:#fff; border:1px solid var(--line); border-radius:var(--r); overflow:hidden}
+.spec div{display:grid; grid-template-columns:148px minmax(0,1fr); gap:24px; align-items:baseline; padding:18px 24px; border-top:1px solid var(--line)}
+.spec div:first-child{border-top:0}
+.spec dt{font:500 var(--t-xs)/1.5 var(--mono); letter-spacing:var(--track); text-transform:uppercase; color:var(--petrol)}
+.spec dd{margin:0; line-height:1.55}
+
+/* Wirkprinzip: vier Schritte als Icon-Kacheln mit Verbindungslinie */
+.flow{display:grid; grid-template-columns:repeat(4,minmax(0,1fr)); gap:0 32px; counter-reset:f}
+.flow > div{position:relative}
+.flow > div::before{counter-increment:f; content:"0" counter(f); display:block; margin-bottom:14px; font:500 var(--t-xs)/1 var(--mono); letter-spacing:var(--track); color:var(--copper-ink)}
+.flow svg{display:block; width:64px; height:64px; padding:4px; margin-bottom:20px; background:#fff; border:1px solid var(--line); border-radius:var(--r)}
+.flow svg *{vector-effect:non-scaling-stroke}
+.flow > div:not(:last-child)::after{content:""; position:absolute; top:58.5px; left:80px; right:-16px; height:1px; background:var(--line-mid)}
+.flow h3{margin:0 0 8px}
+.flow p{margin:0; font-size:var(--t-s); line-height:1.55; color:var(--muted)}
+/* Kurze Kartentexte (2 bis 3 Zeilen) ausgeglichen statt pretty: kein Einzelwort in der letzten Zeile.
+   Unter 360 px werden Sicherheit, Ablauf und Quellen 4 bis 5 Zeilen lang, dort wieder pretty */
+.flow p,.check p,.timeline p,.spec dd,.mtable .src{text-wrap:balance}
+.mech-text{display:grid; grid-template-columns:minmax(0,1fr) minmax(0,1fr); grid-template-areas:"fig lead" "fig copy"; column-gap:var(--gap); row-gap:28px; margin-top:72px; padding-top:64px; border-top:1px solid var(--line)}
+.mech-text .media{grid-area:fig; align-self:center}
+.mech-lead{grid-area:lead; align-self:end}
+.mech-copy{grid-area:copy; align-self:start}
+.mech-copy p{max-width:56ch}
+.mech-copy p:last-child{margin-bottom:0}
+.mech-copy strong{-webkit-hyphens:manual; hyphens:manual}
+/* Desktop: Die Spalte (ab 441 px) fasst „EDTA (Ethylendiamintetraessigsäure).“ als Ganzes, statt „essigsäure).“ allein in der letzten Zeile */
+@media (min-width:1021px){.mech-copy strong{-webkit-hyphens:none; hyphens:none}}
+.callout{max-width:26em; margin:0; padding:2px 0 2px 22px; border-left:3px solid var(--copper); font-size:var(--t-quote); font-weight:500; line-height:1.45; letter-spacing:-.01em}
+
+/* Bilder im Text */
+.media .ph,.call-img .ph{background:#E3EAEA}
+.media figcaption{margin-top:12px; font:400 var(--t-xs)/1.5 var(--mono); color:var(--muted); opacity:1}
+.media-was .ph{aspect-ratio:4/3}
+.media-was img{object-position:50% 40%}
+
+/* Metalle-Tabelle */
+.mtable{position:relative; width:100%; border-collapse:separate; border-spacing:0; background:#fff; border:1px solid var(--line); border-radius:var(--r); overflow:hidden}
+.mtable th,.mtable td{padding:18px 24px; text-align:left; vertical-align:baseline; border-top:1px solid var(--line)}
+.mtable thead th{padding-top:14px; padding-bottom:14px; border-top:0; background:var(--soft); font:500 var(--t-xs)/1.4 var(--mono); letter-spacing:var(--track); text-transform:uppercase; color:var(--muted)}
+.mtable .sym{width:96px; font-size:26px; font-weight:600; line-height:1.2; letter-spacing:-.02em; color:var(--petrol-deep)}
+.mtable .name{width:200px; font-weight:600}
+.mtable .src{color:var(--muted)}
+.foot-note{max-width:54ch; margin:20px 0 0; font-size:var(--t-s); line-height:1.55; color:var(--muted)}
+
+/* Ablauf: Linie von Punkt 01 bis Punkt 04, Zeilen der vier Spalten auf gemeinsamen Linien (subgrid) */
+.sec-split{gap:var(--gap); margin-bottom:64px}
+.timeline{position:relative; display:grid; grid-template-columns:repeat(4,minmax(0,1fr)); grid-template-rows:repeat(4,auto); column-gap:32px; margin:0; padding:0; list-style:none}
+.timeline::before{content:""; position:absolute; top:24px; left:24px; right:calc((100% - 96px) / 4 - 24px); height:1px; background:var(--line-mid)}
+.timeline li{position:relative; display:grid; grid-row:span 4; grid-template-rows:subgrid; align-content:start}
+.timeline .dot{position:relative; display:grid; place-items:center; width:48px; height:48px; margin-bottom:24px; border-radius:50%; background:#fff; border:1px solid var(--petrol); font:500 var(--t-xs)/1 var(--mono); color:var(--petrol)}
+.timeline li:first-child .dot{background:var(--petrol); color:#fff}
+.timeline h3{margin:0 0 6px}
+/* Meta als Datenzeilen untereinander: kein Trennpunkt, der am Zeilenende hängen kann */
+.timeline .meta{display:block; margin-bottom:12px; font:500 var(--t-xs)/1.5 var(--mono); color:var(--copper-ink)}
+.timeline .meta > span{display:block}
+.timeline p{margin:0; font-size:var(--t-s); line-height:1.55; color:var(--muted)}
+
+/* Sicherheit */
+.checks{display:grid; grid-template-columns:minmax(0,1fr) minmax(0,1fr); column-gap:var(--gap)}
+.check{display:grid; grid-template-columns:40px minmax(0,1fr); gap:18px; padding:24px 0; border-top:1px solid var(--line)}
+.check:nth-last-child(-n+2){border-bottom:1px solid var(--line)}
+.check .ic{display:grid; place-items:center; width:40px; height:40px; border-radius:var(--r-sm); background:var(--mint); color:var(--petrol-deep)}
+.check h3{margin:7px 0 6px}
+.check p{max-width:52ch; margin:0; font-size:var(--t-s); line-height:1.55; color:var(--muted)}
+
+/* Erstgespräch: Text links, rechts Foto mit überlappender Anrufbox */
+.callnow{display:grid; grid-template-columns:minmax(0,1fr) minmax(0,1fr); gap:var(--gap); align-items:center; padding:clamp(40px,4.4vw,64px); background:#fff; border:1px solid var(--line); border-radius:var(--r-lg)}
+.checks-mini{display:grid; gap:12px; margin:28px 0 0; padding:0; list-style:none}
+.checks-mini li{display:grid; grid-template-columns:16px minmax(0,1fr); gap:12px; font-size:var(--t-s); line-height:1.5; text-wrap:balance}
+.checks-mini svg{margin-top:4px; color:var(--petrol)}
+.call-side .call-img{margin:0}
+.call-side .call-img .ph{aspect-ratio:3/2}
+.call-img img{object-position:72% 40%}
+.callbox{position:relative; margin:-96px clamp(16px,2.4vw,32px) 0; padding:30px clamp(24px,2.4vw,32px) 32px; background:var(--petrol); color:#fff; border-radius:var(--r); box-shadow:0 24px 48px -24px rgba(10,63,72,.55)}
+.callbox .cb-label{margin:0; font:500 var(--t-xs)/1.3 var(--mono); letter-spacing:var(--track); text-transform:uppercase; color:var(--on-dark-3)}
+.callbox .phone{display:block; margin:4px 0 0; padding:6px 0; font-size:clamp(30px,2.8vw,38px); font-weight:600; line-height:1.15; letter-spacing:-.02em; color:#fff; text-decoration:none}
+.callbox .meta{display:flex; flex-wrap:wrap; gap:2px 12px; margin:2px 0 22px; font:400 var(--t-xs)/1.5 var(--mono); color:var(--on-dark-2)}
+.callbox .meta span{display:inline-flex; align-items:center; gap:8px; white-space:nowrap}
+.callbox .meta span::before{content:""; width:5px; height:5px; border-radius:50%; background:var(--on-dark-3)}
+.callbox .cta-row{display:grid; grid-template-columns:minmax(0,1fr); gap:10px}
+.callbox .btn-primary,.contact-card .btn-primary{background:#fff; color:var(--petrol-deep)}
+.callbox .btn-ghost{background:rgba(255,255,255,.12); color:#fff; box-shadow:none}
+.contact-card .btn-ghost{background:rgba(255,255,255,.1); color:#fff; box-shadow:none}
+@media (hover:hover){
+  .callbox .btn-primary:hover,.contact-card .btn-primary:hover{background:var(--mint)}
+  .callbox .btn-ghost:hover,.contact-card .btn-ghost:hover{background:rgba(255,255,255,.2)}
+}
+
+/* Über mich: Porträt links über zwei Zeilen, rechts Kopf und Text */
+.about{display:grid; grid-template-columns:minmax(0,5fr) minmax(0,7fr); grid-template-areas:"photo head" "photo copy"; column-gap:var(--gap)}
+.about .photo{grid-area:photo; align-self:center; aspect-ratio:4/5; overflow:hidden; border-radius:var(--r); background:var(--soft)}
+.about .photo img{width:100%; height:100%; object-fit:cover; object-position:50% 20%}
+.about-head{grid-area:head; align-self:end}
+.about-copy{grid-area:copy; align-self:start}
+.about blockquote{max-width:28em; margin:24px 0; padding-left:22px; border-left:3px solid var(--petrol); font-size:var(--t-quote); font-weight:500; line-height:1.45; letter-spacing:-.01em}
+.about-text{max-width:52ch; color:var(--muted)}
+/* Zitate sind höchstens 5 Zeilen lang: ausgeglichen statt Flattersatz mit kurzem Rest */
+.callout,.about blockquote{text-wrap:balance}
+/* Qualifikationen als Liste in zwei festen Spalten, gleiche Sprache wie der Steckbrief (Begriff dunkel, Ergänzung grau) */
+.chips{display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); column-gap:24px; margin:28px 0 0; padding:0; list-style:none; border-top:1px solid var(--line)}
+.chips li{padding:12px 0; border-bottom:1px solid var(--line); font-size:var(--t-sm); line-height:1.45; color:var(--muted)}
+.chips li b{font-weight:600; color:var(--ink)}
+
+/* FAQ */
+.faq-grid{display:grid; grid-template-columns:minmax(0,5fr) minmax(0,7fr); gap:var(--gap); align-items:start}
+.faq-grid .sec-head{position:sticky; top:calc(var(--bar) + 40px); margin-bottom:0}
+.faq-item{border-top:1px solid var(--line)}
+.faq-item:last-child{border-bottom:1px solid var(--line)}
+.faq-item summary{position:relative; padding:22px 48px 22px 0; list-style:none; cursor:pointer}
+.faq-item summary::-webkit-details-marker{display:none}
+.faq-item summary h3{line-height:1.35; transition:color .2s}
+/* Plus/Minus auf Höhe der ersten Zeile */
+.faq-item summary::before,.faq-item summary::after{content:""; position:absolute; right:8px; top:calc(22px + var(--t-h3) * .675 - 1px); width:16px; height:2px; background:var(--petrol); transition:transform .25s}
+.faq-item summary::after{transform:rotate(90deg)}
+.faq-item[open] summary::after{transform:rotate(0)}
+.faq-answer{padding:0 48px 24px 0; color:var(--muted)}
+.faq-answer p{max-width:50ch; margin:0}
+@media (hover:hover){.faq-item summary:hover h3{color:var(--petrol)}}
+
+/* Kontakt */
+#kontakt{padding-bottom:clamp(48px,5vw,72px)}
+.contact-card{position:relative; overflow:hidden; display:grid; grid-template-columns:minmax(0,7fr) minmax(0,5fr); gap:var(--gap); padding:clamp(40px,5vw,72px); background:var(--petrol-deep); color:var(--on-dark-2); border-radius:var(--r-lg)}
+.contact-card > *{position:relative; z-index:1}
+.contact-card::after{content:""; position:absolute; right:-250px; top:-250px; width:380px; height:380px; border-radius:50%; border:1px solid rgba(255,255,255,.08); box-shadow:0 0 0 60px rgba(255,255,255,.03); pointer-events:none}
+.contact-card h2{color:#fff}
+.contact-card .label{color:var(--on-dark-3)}
+.contact-card p:not(.label){max-width:32em; margin:16px 0 32px; font-size:var(--t-sub); line-height:1.55; color:var(--on-dark-2)}
+.nap{display:grid; align-content:start; font-style:normal; line-height:1.55}
+.nap div{padding:18px 0; border-top:1px solid rgba(255,255,255,.14)}
+.nap div:first-child{padding-top:0; border-top:0}
+.nap .nap-l{display:block; margin-bottom:8px; font:500 var(--t-xs)/1.3 var(--mono); letter-spacing:var(--track); text-transform:uppercase; color:var(--on-dark-3)}
+.nap a{color:#fff; text-decoration:none}
+@media (hover:hover){.nap a:hover{text-decoration:underline}}
+
+/* Footer */
+footer.site{padding:0 0 48px; font-size:var(--t-sm); line-height:1.6; color:var(--muted)}
+.foot-grid{display:grid; grid-template-columns:minmax(0,7fr) minmax(0,5fr); gap:var(--gap); padding-top:32px; border-top:1px solid var(--line)}
+.foot-text p{max-width:55ch; margin:0 0 .8em}
+.foot-stand{display:block}
+.foot-text p:last-child{margin:0}
+footer.site nav{display:flex; flex-wrap:wrap; justify-content:flex-end; align-items:flex-start; gap:4px 24px}
+footer.site a{color:var(--muted)}
+@media (hover:hover){footer.site a:hover{color:var(--ink)}}
+
+.mcta{display:none}
+
+/* ================================================================ Touch-Ziele (Tablet, Touch-Laptop) */
+@media (max-width:1020px), (pointer:coarse){
+  .strip .wrap{min-height:44px}
+  .strip a{display:inline-block; padding:12px 0; margin:-12px 0}
+  .nap a{display:inline-block; padding:10px 0; margin:-8px 0}
+  footer.site nav a{display:inline-block; padding:12px 0}
+}
+
+/* ================================================================ Tablet und kleiner (bis 1020 px): eigenes Raster */
+@media (max-width:1020px){
+  nav.main a:not(.btn){display:none}
+  .menu-btn{display:inline-flex; width:44px; height:44px; margin-left:12px}
+  nav.main{margin-left:auto}
+  html.nav-open nav.main{position:absolute; top:100%; left:0; right:0; display:grid; grid-template-columns:minmax(0,1fr) minmax(0,1fr); column-gap:var(--gap); padding:8px max(var(--gutter), env(safe-area-inset-right)) 28px max(var(--gutter), env(safe-area-inset-left)); background:#fff; border-top:1px solid var(--line); border-bottom:1px solid var(--line); box-shadow:0 24px 40px -28px rgba(16,33,42,.35)}
+  html.nav-open nav.main a:not(.btn){display:flex; align-items:center; min-height:56px; padding:8px 0; font-size:var(--t-m); font-weight:600; color:var(--ink); border-bottom:1px solid var(--line)}
+  html.nav-open nav.main .btn{grid-column:1 / -1; justify-self:start; min-width:260px; min-height:52px; margin:24px 0 0; padding:0 28px; font-size:var(--t-s)}
+  .hero{padding:56px 0 72px; background:radial-gradient(640px 420px at 85% 0%, #EAF3F2 0%, rgba(234,243,242,0) 68%), var(--bg)}
+  .hero-grid{grid-template-columns:minmax(0,1fr); gap:44px}
+  .table{grid-template-columns:repeat(6,minmax(0,1fr)); gap:10px}
+  .el{padding:12px 10px 10px 12px}
+  .el b{font-size:clamp(28px,3.8vw,36px)}
+  .el span{font-size:var(--t-xs)}
+  .facts-grid{grid-template-columns:minmax(0,1fr) minmax(0,1fr)}
+  .fact,.fact + .fact{padding:24px 24px 24px 0; border-left:0; border-top:1px solid var(--line)}
+  .fact:nth-child(-n+2){border-top:0}
+  .fact:nth-child(even){padding-left:24px; border-left:1px solid var(--line)}
+  .sec-head{max-width:640px}
+  .glance{grid-template-columns:minmax(0,1fr); gap:0}
+  .glance .sec-head{position:static; margin-bottom:var(--head-gap)}
+  .flow{grid-template-columns:minmax(0,1fr) minmax(0,1fr); gap:40px var(--gap)}
+  .flow > div{display:grid; grid-template-columns:64px minmax(0,1fr); column-gap:20px; align-content:start}
+  .flow > div::before{grid-column:2; margin:4px 0 10px}
+  .flow svg{grid-column:1; grid-row:1 / span 3; margin:0}
+  .flow h3,.flow p{grid-column:2}
+  .flow > div::after{display:none}
+  .mech-text{grid-template-areas:"fig lead" "copy copy"; row-gap:40px; margin-top:56px; padding-top:48px}
+  .mech-lead{align-self:center}
+  .mech-copy{display:grid; grid-template-columns:minmax(0,1fr) minmax(0,1fr); column-gap:var(--gap)}
+  .mech-copy p{max-width:none; margin:0}
+  .sec-split{grid-template-columns:minmax(0,1fr) minmax(0,1fr); align-items:center; margin-bottom:56px}
+  .timeline{grid-template-columns:minmax(0,1fr) minmax(0,1fr); grid-template-rows:none; column-gap:var(--gap)}
+  .timeline::before{display:none}
+  .timeline li:nth-child(-n+2){padding-bottom:40px}
+  .callnow{grid-template-columns:minmax(0,1fr); gap:40px; padding:40px}
+  .call-side .callbox{max-width:420px; margin:-112px 24px 0 auto}
+  .about{grid-template-areas:"photo head" "copy copy"; row-gap:32px}
+  .about-head{align-self:center}
+  .about blockquote{margin-bottom:0}
+  .faq-grid{grid-template-columns:minmax(0,1fr); gap:0}
+  .faq-grid .sec-head{position:static; margin-bottom:var(--head-gap)}
+  .contact-card{grid-template-columns:minmax(0,1fr); gap:36px; padding:48px 40px}
+  /* Ring nur als Bogen in der Ecke oben rechts, ohne Band: Mittelpunkt 40 px rechts und 60 px über der Kartenecke,
+     damit er im rechten Innenabstand bleibt und weder H2 noch Absatz kreuzt */
+  .contact-card::after{right:-230px; top:-250px; box-shadow:none}
+  .nap{grid-template-columns:minmax(0,1fr) minmax(0,1fr); column-gap:var(--gap); padding-top:28px; border-top:1px solid rgba(255,255,255,.14)}
+  .nap div:first-child{grid-row:span 2}
+  .nap div:nth-child(2){padding-top:0; border-top:0}
+  .foot-grid{grid-template-columns:minmax(0,1fr); gap:16px}
+  footer.site nav{justify-content:flex-start}
+}
+@media (max-width:760px){.strip .hide-s{display:none}}
+/* Tablet und quer: „Termin buchen“ bleibt im Header, auch bei geöffnetem Menü (springt nicht ins Panel) */
+@media (min-width:641px) and (max-width:1020px){
+  header .head-cta{display:inline-flex; min-height:44px; margin-left:auto; padding:0 18px; font-size:var(--t-sm)}
+  nav.main{margin-left:0}
+  nav.main .btn{display:none}
+  /* Über mich: Text links, Qualifikationen rechts als eine Spalte, erste Zeilen auf gemeinsamer Grundlinie (keine zwei rechten Kanten) */
+  .about-copy{display:grid; grid-template-columns:minmax(0,7fr) minmax(0,5fr); column-gap:var(--gap); align-items:first baseline}
+  .about-copy .about-text{margin:0}
+  .about-copy .chips{grid-template-columns:minmax(0,1fr); margin-top:0}
+}
+/* Zeitleiste zweispaltig (Tablet, quer, kleiner Desktop): Linie verbindet 01 mit 02 und 03 mit 04 auf Punktmitte */
+@media (min-width:641px) and (max-width:1199px){
+  .timeline li:nth-child(odd)::after{content:""; position:absolute; top:24px; left:48px; right:calc(-1 * var(--gap)); height:1px; background:var(--line-mid)}
+}
+
+/* Metalle-Tabelle ab Tablet bis kleiner Desktop: schmalere Namensspalte, mehr Platz für die Quellen */
+@media (min-width:641px) and (max-width:1199px){
+  .mtable .sym{width:80px}
+  .mtable .name{width:150px}
+}
+
+/* ================================================================ Kleiner Desktop (1021 bis 1199 px)
+   Steckbrief wie auf dem Tablet: Kopf über der Karte (neben der Karte blieb der Kopf zu schmal, darunter eine Lücke),
+   Zeitleiste zweispaltig (vierspaltig wären es unter 1200 px nur rund 235 px je Schritt) */
+@media (min-width:1021px) and (max-width:1199px){
+  .glance{grid-template-columns:minmax(0,1fr); gap:0}
+  .glance .sec-head{position:static; margin-bottom:var(--head-gap)}
+  .timeline{grid-template-columns:minmax(0,1fr) minmax(0,1fr); grid-template-rows:none; column-gap:var(--gap)}
+  .timeline::before{display:none}
+  .timeline li:nth-child(-n+2){padding-bottom:40px}
+}
+
+/* ================================================================ Handy (bis 640 px) */
+@media (max-width:640px){
+  .strip{display:none}
+  .brand svg{width:34px; height:34px}
+  .brand b{font-size:var(--t-s)}
+  nav.main{display:none}
+  html.nav-open nav.main{grid-template-columns:minmax(0,1fr); padding-bottom:24px}
+  html.nav-open nav.main .btn{justify-self:stretch; min-width:0; margin-top:20px}
+  .hero{padding:24px 0 48px}
+  .hero .label{margin-bottom:14px}
+  .hero .lead{margin:16px 0 24px; line-height:1.55}
+  .cta-row{flex-direction:column; gap:10px}
+  .cta-row .btn{width:100%}
+  .table{grid-template-columns:repeat(3,minmax(0,1fr)); gap:8px}
+  .el{padding:9px 8px 8px 10px; border-radius:var(--r-sm)}
+  .el b{font-size:28px}
+  .fact,.fact + .fact{padding:18px 14px 18px 0}
+  .fact:nth-child(even){padding-left:16px; padding-right:0}
+  .fact b{font-size:20px}
+  .fact .nw{white-space:normal}
+  .spec div{grid-template-columns:minmax(0,1fr); gap:4px; padding:16px 18px}
+  .flow{grid-template-columns:minmax(0,1fr); gap:28px}
+  .flow > div{grid-template-columns:56px minmax(0,1fr); column-gap:16px}
+  .flow svg{width:56px; height:56px}
+  .flow > div::before{margin:2px 0 8px}
+  .mech-text{grid-template-columns:minmax(0,1fr); grid-template-areas:"fig" "lead" "copy"; row-gap:28px; margin-top:44px; padding-top:0; border-top:0}
+  .mech-copy{display:block}
+  .mech-copy p{margin:0 0 1em}
+  .mech-copy p:last-child{margin:0}
+  .mtable thead{position:absolute; width:1px; height:1px; overflow:hidden; clip-path:inset(50%); white-space:nowrap}
+  .mtable,.mtable tbody,.mtable tr,.mtable td,.mtable th{display:block}
+  .mtable .sym,.mtable .name{width:auto}
+  .mtable tbody tr{display:grid; grid-template-columns:40px minmax(0,1fr); column-gap:14px; padding:16px 18px; border-top:1px solid var(--line)}
+  .mtable tbody tr:first-child{border-top:0}
+  .mtable tbody td,.mtable tbody th{padding:0; border:0}
+  .mtable .sym{grid-row:1 / 3; padding-top:1px; font-size:24px; line-height:1}
+  .mtable .src{margin-top:2px; font-size:var(--t-s); line-height:1.5}
+  .sec-split{grid-template-columns:minmax(0,1fr)}
+  .timeline{grid-template-columns:minmax(0,1fr)}
+  .timeline li,.timeline li:nth-child(-n+2){grid-row:auto; grid-template-rows:none; grid-template-columns:40px minmax(0,1fr); column-gap:16px; padding-bottom:28px}
+  .timeline li:last-child{padding-bottom:0}
+  .timeline .dot{grid-row:1 / 4; width:40px; height:40px; margin:0}
+  .timeline li:not(:last-child)::after{content:""; position:absolute; left:20px; top:48px; bottom:8px; width:1px; background:var(--line-mid)}
+  .timeline h3{margin-top:8px}
+  .checks{grid-template-columns:minmax(0,1fr)}
+  .check{padding:20px 0}
+  .check:nth-last-child(2){border-bottom:0}
+  /* Erstgespräch ohne Karte: Text, randloses Foto, Anrufbox überlappt das Foto */
+  .callnow{gap:32px; padding:0; background:none; border:0; border-radius:0}
+  .call-side .call-img{margin:0 -16px}
+  .call-side .call-img .ph{aspect-ratio:4/3; border-radius:0}
+  /* 4:3-Ausschnitt aus dem 3:2-Bild: beide Gesichter frei, keines am Bildrand */
+  .call-side .call-img img{object-position:36% 40%}
+  .call-side .callbox{max-width:none; margin:-40px 0 0; padding:24px 20px}
+  .callbox .phone{font-size:30px}
+  .about{grid-template-columns:minmax(0,1fr); grid-template-areas:"photo" "head" "copy"; row-gap:28px}
+  .about .photo{aspect-ratio:1 / 1}
+  .about blockquote{margin:20px 0 0}
+  .about-copy{margin-top:-4px}
+  .chips{display:block; margin-top:20px}
+  .faq-item summary{padding:18px 36px 18px 0}
+  .faq-item summary::before,.faq-item summary::after{top:calc(18px + var(--t-h3) * .675 - 1px); right:4px}
+  .faq-answer{padding:0 0 20px}
+  .contact-card{gap:28px; padding:32px 20px 28px}
+  .contact-card p:not(.label){margin:14px 0 24px}
+  /* Handy: Die H2 läuft fast über die volle Kartenbreite, eine freie Ecke gibt es nicht */
+  .contact-card::after{display:none}
+  .nap{grid-template-columns:minmax(0,1fr); padding-top:24px}
+  .nap div:first-child{grid-row:auto}
+  .nap div:nth-child(2){padding-top:18px; border-top:1px solid rgba(255,255,255,.14)}
+  footer.site{padding-bottom:calc(24px + env(safe-area-inset-bottom))}
+  .foot-grid{padding-top:28px}
+  /* Handy-Leiste: eigene Fläche über die volle Breite, Buttons im Seitenraster */
+  .mcta{display:flex; gap:8px; position:fixed; left:0; right:0; bottom:0; z-index:60; padding:10px max(16px, env(safe-area-inset-right)) calc(10px + env(safe-area-inset-bottom)) max(16px, env(safe-area-inset-left)); background:#fff; border-top:1px solid var(--line); box-shadow:0 -10px 24px -18px rgba(16,33,42,.3)}
+  .mcta .btn{white-space:nowrap}
+  .mcta .btn-ghost{flex:0 0 auto; padding:0 16px; background:var(--soft); box-shadow:inset 0 0 0 1px var(--line)}
+  .mcta .btn-primary{flex:1; min-width:0; padding:0 16px}
+  footer.site nav{gap:0 16px}
+}
+@media (max-width:419px){.brand .hp{display:none}}
+@media (max-width:359px){
+  /* 320: Kartentexte werden 4 bis 5 Zeilen lang, ausgeglichen entstünden sehr kurze Mittelzeilen */
+  .check p,.timeline p{text-wrap:pretty}
+  /* Sicherheit: Überschrift mittig neben dem Icon, Text darunter über die volle Breite (288 statt 230 px).
+     Negativer Rand statt display:contents, damit die Textspalte eine eigene Box behält */
+  .check h3{margin:8px 0 16px}
+  .check p{margin-left:-58px}
+  /* Metalle: Symbol und Name in einer Zeile, Quellen darunter über die volle Breite (252 statt 198 px) */
+  .mtable .sym,.mtable .name{grid-row:auto; align-self:baseline}
+  .mtable .src{grid-column:1 / -1; margin-top:8px}
+  /* Eyebrow zweizeilig ohne hängenden Schrägstrich (ab 360 passt er in eine Zeile) */
+  .hero .label{flex-direction:column; align-items:flex-start; row-gap:4px}
+  .hero .label i{display:none}
+  /* 320: drei gleichwertige Punkte untereinander statt eines Einzelworts in Zeile 2 */
+  .callbox .meta{display:grid; row-gap:2px}
+}
+/* Niedrige, schmale Fenster (400 % Zoom, Handy quer unter 641 px): nichts Festes, das die Hälfte verdeckt */
+@media (max-width:640px) and (max-height:520px){
+  header.site{position:relative}
+  .mcta{display:none!important}
+}
+
+/* ================================================================ Handy quer (ab 641 px Breite, bis 500 px Höhe) */
+@media (orientation:landscape) and (max-height:500px) and (min-width:641px){
+  .strip{display:none}
+  .brand svg{width:32px; height:32px}
+  html.nav-open nav.main{padding-bottom:20px}
+  html.nav-open nav.main a:not(.btn){min-height:48px}
+  html.nav-open nav.main .btn{margin-top:16px}
+  .hero{padding:16px 0 36px}
+  .hero-grid{grid-template-columns:minmax(0,1fr) 232px; gap:32px; align-items:center}
+  .hero .label{margin-bottom:10px}
+  .hero .lead{max-width:none; margin:12px 0 16px}
+  .cta-row .btn{min-height:46px; padding:0 20px}
+  .table{grid-template-columns:repeat(2,minmax(0,1fr)); gap:8px}
+  .el{aspect-ratio:5 / 4; padding:8px 8px 7px 10px}
+  .el b{font-size:26px}
+  .table-cap{display:none}
+  .sec-split{margin-bottom:40px}
+  /* Erstgespräch nebeneinander statt eines bildschirmhohen Fotos */
+  .callnow{grid-template-columns:minmax(0,1fr) minmax(0,1fr); gap:32px; padding:32px}
+  .call-side .callbox{max-width:none; margin:-56px 0 0; padding:22px 24px 24px}
+}
+/* Schmales Handy quer (641 bis 819 px, z. B. 667x375, 740x360, 812x375): Neben der Kachelspalte würde die H1 vierzeilig
+   und die Buttons lägen unter dem Rand. Text über die volle Breite, Kacheln als eine Reihe darunter wie auf dem Tablet,
+   Sicherheit und Erstgespräch einspaltig */
+@media (orientation:landscape) and (max-height:500px) and (min-width:641px) and (max-width:819px){
+  .hero{padding:12px 0 32px}
+  .hero-grid{grid-template-columns:minmax(0,1fr); gap:20px}
+  .hero .lead{max-width:36em; margin:10px 0 14px}
+  .cta-row .btn{min-height:44px}
+  .table{grid-template-columns:repeat(6,minmax(0,1fr)); gap:8px}
+  .el{aspect-ratio:1; padding:8px 7px 7px 9px}
+  .checks{grid-template-columns:minmax(0,1fr)}
+  .check:nth-last-child(2){border-bottom:0}
+  .callnow{grid-template-columns:minmax(0,1fr); gap:28px; padding:28px}
+  .call-side .call-img .ph{aspect-ratio:16/9}
+  .call-side .callbox{max-width:380px; margin:-64px 20px 0 auto}
+}
+
+@media (forced-colors:active){
+  .faq-item summary::before,.faq-item summary::after{background:CanvasText; forced-color-adjust:none}
+}
+@media (prefers-reduced-motion:reduce){html{scroll-behavior:auto} *,*::before,*::after{transition:none!important}}
+</style>
+</head>
+<body>
+<a class="skip" href="#inhalt">Zum Inhalt springen</a>
+
+<aside class="strip" aria-label="Praxiskontakt">
+  <div class="wrap">
+    <span>{{STREET_NB}} · {{ZIP}}&nbsp;<span class="nw">{{CITY}}-{{DISTRICT}}</span></span>
+    <span><a href="tel:{{PHONE_INTL}}">{{PHONE_DE}}</a><span class="hide-s"> · <a href="mailto:{{EMAIL}}">{{EMAIL}}</a></span></span>
+  </div>
+</aside>
+<header class="site" id="top">
+  <div class="wrap bar">
+    <a class="brand" href="#top">
+      <svg width="38" height="38" viewBox="0 0 64 64" aria-hidden="true"><rect width="64" height="64" rx="14" fill="#0E5A66"/><circle cx="32" cy="32" r="7" fill="#E9B893"/><path d="M17 19c8-6 22-6 30 0M17 45c8 6 22 6 30 0M15 22c-6 7-6 13 0 20M49 22c6 7 6 13 0 20" stroke="#fff" stroke-width="2.6" fill="none" stroke-linecap="round"/></svg>
+      <span><b>Nina Klimek</b> <span class="sub"><span class="hp">Heilpraktikerin · </span>Chelattherapie Berlin</span></span><span class="vh">, zum Seitenanfang</span>
+    </a>
+    <nav class="main" id="nav-main" aria-label="Hauptnavigation">
+      <a href="#wirkprinzip">Wirkprinzip</a>
+      <a href="#ablauf">Ablauf</a>
+      <a href="#sicherheit">Sicherheit</a>
+      <a href="#erstgespraech">Erstgespräch</a>
+      <a href="#faq">FAQ</a>
+      <a class="m-only" href="#kontakt">Kontakt</a>
+      <a class="btn btn-primary" href="{{DOCTOLIB}}" rel="noopener" target="_blank">Termin buchen<span class="vh"> (öffnet in neuem Tab)</span></a>
+    </nav>
+    <a class="btn btn-primary head-cta" href="{{DOCTOLIB}}" rel="noopener" target="_blank">Termin buchen<span class="vh"> (öffnet in neuem Tab)</span></a>
+    <button class="menu-btn" type="button" aria-expanded="false" aria-controls="nav-main" aria-label="Menü"><span></span><span></span></button>
+  </div>
+</header>
+
+<main id="inhalt" tabindex="-1">
+
+<section class="hero" aria-labelledby="h1">
+  <div class="wrap hero-grid">
+    <div>
+      <p class="label"><span>Heilpraktikerin</span> <i>/</i> <span>Berlin-Lichtenrade</span></p>
+      <h1 id="h1">Chelattherapie in&nbsp;Berlin: <span>Schwermetalle erkennen und gezielt ausleiten.</span></h1>
+      <p class="lead">Erst die Diagnostik, dann die Entscheidung: Anhand von Anamnese und Laborbefunden prüfe ich, ob eine Belastung durch Metalle vorliegt, und plane eine <span class="nw">EDTA-Ausleitung</span> nur dort, wo sie für Sie sinnvoll ist.</p>
+      <div class="cta-row">
+        <a class="btn btn-primary" href="{{DOCTOLIB}}" rel="noopener" target="_blank">Erstanamnese buchen<span class="vh"> (öffnet in neuem Tab)</span>
+          <svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="1.6"/></svg></a>
+        <a class="btn btn-ghost" href="#erstgespraech" data-tel="tel:{{PHONE_INTL}}">Kostenloses Erstgespräch</a>
+      </div>
+    </div>
+    <div class="table" role="img" aria-label="Metalle, die in der Diagnostik betrachtet werden: Quecksilber, Blei, Cadmium, Arsen, Aluminium und je nach Exposition weitere">
+      <div class="el hl"><small>80</small> <b>Hg</b> <span>Quecksilber</span></div>
+      <div class="el"><small>82</small> <b>Pb</b> <span>Blei</span></div>
+      <div class="el"><small>48</small> <b>Cd</b> <span>Cadmium</span></div>
+      <div class="el"><small>33</small> <b>As</b> <span>Arsen</span></div>
+      <div class="el"><small>13</small> <b>Al</b> <span>Aluminium</span></div>
+      <div class="el more"><small>&nbsp;</small> <b>+</b> <span>je nach Exposition</span></div>
+      <p class="table-cap">Metalle, die im Rahmen der Diagnostik betrachtet werden.</p>
+    </div>
+  </div>
+</section>
+
+<div class="facts">
+  <div class="wrap">
+    <div class="facts-grid">
+      <div class="fact"><b>4 Schritte</b> <span>von der Anamnese bis zur Verlaufskontrolle</span></div>
+      <div class="fact"><b>Blut &amp; Urin</b> <span>gezielte Labordiagnostik je nach Metall</span></div>
+      <div class="fact"><b>Vor&nbsp;Ort &amp;&nbsp;online</b> <span>Erstanamnese in Lichtenrade oder per Video</span></div>
+      <div class="fact"><b>10&nbsp;Min.</b> <span>kostenloses <span class="nw">Kennenlern-Telefonat</span></span></div>
+    </div>
+  </div>
+</div>
+
+<!-- AUF EINEN BLICK -->
+<section id="auf-einen-blick" aria-labelledby="h-blick">
+  <div class="wrap glance">
+    <div class="sec-head">
+      <p class="label">Steckbrief</p>
+      <h2 id="h-blick">Chelattherapie auf einen Blick</h2>
+      <p class="sub">Die wichtigsten Fakten, kurz&nbsp;und nachvollziehbar&nbsp;zusammengefasst.</p>
+    </div>
+    <dl class="spec">
+      <div><dt>Verfahren</dt><dd>Infusion mit einem Chelatbildner (EDTA), der bestimmte Metallionen bindet und ihre Ausscheidung über die Nieren ermöglicht.</dd></div>
+      <div><dt>Geeignet bei</dt><dd>Verdacht auf oder nachgewiesener Belastung durch Metalle wie Blei, Cadmium, Quecksilber, Arsen oder Aluminium.</dd></div>
+      <div><dt>Diagnostik</dt><dd>Anamnese, Blut- und/oder Urinuntersuchung, Nierenwerte, Mineralstoffstatus.</dd></div>
+      <div><dt>Ablauf</dt><dd>Erstanamnese <span aria-hidden="true">→</span>&nbsp;Labor <span aria-hidden="true">→</span>&nbsp;<span class="nw">Befund &amp; Therapieplan</span> <span aria-hidden="true">→</span>&nbsp;begleitete Infusionen.</dd></div>
+      <div><dt>Erstgespräch</dt><dd>Kostenloses, unverbindliches Telefonat (10&nbsp;Min.) zum Kennenlernen.</dd></div>
+      <div><dt>Ort</dt><dd>{{PRAXIS}}, {{STREET_NB}}, {{ZIP}}&nbsp;<span class="nw">{{CITY}}-{{DISTRICT}}</span></dd></div>
+    </dl>
+  </div>
+</section>
+
+<!-- WIRKPRINZIP -->
+<section class="soft" id="wirkprinzip" aria-labelledby="h-was">
+  <div class="wrap">
+    <div class="sec-head">
+      <p class="label">Wirkprinzip</p>
+      <h2 id="h-was">Was ist eine&nbsp;Chelattherapie?</h2>
+      <p class="sub">Der Begriff stammt vom griechischen <i>chele</i>, die Schere. Der Wirkstoff umschließt ein Metallion wie eine Zange.</p>
+    </div>
+    <div class="flow">
+      <div>
+        <svg width="64" height="64" viewBox="0 0 56 56" fill="none" aria-hidden="true"><rect x="22" y="6" width="12" height="22" rx="3" stroke="#0E5A66" stroke-width="1.6"/><path d="M28 28v10M24 44h8M28 38v6" stroke="#0E5A66" stroke-width="1.6"/></svg>
+        <h3>Infusion</h3><p>EDTA wird langsam über eine Vene am Arm verabreicht.</p></div>
+      <div>
+        <svg width="64" height="64" viewBox="0 0 56 56" fill="none" aria-hidden="true"><circle cx="28" cy="28" r="6" fill="#B0714A"/><path d="M14 16c8-6 20-6 28 0M14 40c8 6 20 6 28 0M12 19c-5 6-5 12 0 18M44 19c5 6 5 12 0 18" stroke="#0E5A66" stroke-width="1.6" stroke-linecap="round"/></svg>
+        <h3>Bindung</h3><p>Der Chelatbildner bindet bestimmte Metallionen zu einem stabilen Komplex.</p></div>
+      <div>
+        <svg width="64" height="64" viewBox="0 0 56 56" fill="none" aria-hidden="true"><path d="M22 10c-8 2-12 10-12 18s4 16 12 18c5 1 7-4 5-9-2-4-2-14 0-18 2-5 0-10-5-9zM34 10c8 2 12 10 12 18s-4 16-12 18c-5 1-7-4-5-9 2-4 2-14 0-18-2-5 0-10 5-9z" stroke="#0E5A66" stroke-width="1.6"/></svg>
+        <h3>Filterung</h3><p>Der wasserlösliche Komplex gelangt über das Blut zu den Nieren.</p></div>
+      <div>
+        <svg width="64" height="64" viewBox="0 0 56 56" fill="none" aria-hidden="true"><path d="M28 8c-7 9-12 16-12 23a12 12 0 0024 0c0-7-5-14-12-23z" stroke="#0E5A66" stroke-width="1.6"/><path d="M22 32a6 6 0 006 6" stroke="#B0714A" stroke-width="1.6"/></svg>
+        <h3>Ausscheidung</h3><p>Das gebundene Metall wird mit dem Urin ausgeschieden.</p></div>
+    </div>
+    <div class="mech-text">
+      <figure class="media media-was">
+        <div class="ph"><img src="{{IMG_INFUSION}}" srcset="{{IMG_INFUSION_SRCSET}}" sizes="(max-width: 640px) 100vw, (max-width: 1020px) calc(50vw - 56px), (max-width: 1264px) calc(50vw - 72px), (max-width: 1599px) 540px, 584px" width="{{IMG_INFUSION_W}}" height="{{IMG_INFUSION_H}}" loading="lazy" decoding="async" alt="Heilpraktikerin Nina Klimek bereitet bei einem Patienten die Infusion am Arm vor"></div>
+        <figcaption>Langsame Infusion über eine Vene am Arm, in ruhiger Atmosphäre.</figcaption>
+      </figure>
+      <div class="mech-lead">
+        <p class="callout">Keine allgemeine „<span class="nw">Detox-Kur</span>“, sondern eine gezielte therapeutische Maßnahme zur Ausleitung bestimmter Metalle.</p>
+      </div>
+      <div class="mech-copy">
+        <p>Die Chelattherapie, oft auch Schwermetallausleitung genannt, nutzt Chelatbildner, die bestimmte Metalle binden. In der Medizin werden sie seit Jahrzehnten eingesetzt, etwa bei akuten Bleivergiftungen. In meiner Praxis verwende ich vor allem <strong>EDTA&nbsp;(Ethylen&shy;diamin&shy;tetra&shy;essig&shy;säure)</strong>.</p>
+        <p>Welcher Chelatbildner infrage kommt und ob eine Ausleitung überhaupt sinnvoll ist, richtet sich nach den nachgewiesenen Metallen, Ihren Laborbefunden und Ihren individuellen Voraussetzungen. Die Infusion steht daher nie am Anfang, sondern am Ende einer sorgfältigen Diagnostik.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- METALLE -->
+<section id="metalle" aria-labelledby="h-metalle">
+  <div class="wrap">
+    <div class="sec-head">
+      <p class="label">Belastungsquellen</p>
+      <h2 id="h-metalle">Welche Metalle können eine Rolle spielen?</h2>
+      <p class="sub">Auch wer bewusst lebt, kann den Kontakt mit Umweltbelastungen nicht vollständig vermeiden. Wie gut der Körper aufgenommene Stoffe ausscheidet, ist individuell verschieden. Ein Schwermetalltest in Berlin beginnt bei mir deshalb nicht im Labor, sondern mit der Frage, woher eine Belastung stammen könnte.</p>
+    </div>
+    <table class="mtable" role="table" aria-labelledby="h-metalle">
+      <thead role="rowgroup"><tr role="row"><th scope="col" role="columnheader">Symbol</th><th scope="col" role="columnheader">Metall</th><th scope="col" role="columnheader">Mögliche Quellen im Alltag</th></tr></thead>
+      <tbody role="rowgroup">
+        <tr role="row"><td class="sym" role="cell">Hg</td><th class="name" scope="row" role="rowheader">Quecksilber</th><td class="src" role="cell">Alte Amalgamfüllungen, bestimmte Raubfische wie Thunfisch oder Schwertfisch</td></tr>
+        <tr role="row"><td class="sym" role="cell">Pb</td><th class="name" scope="row" role="rowheader">Blei</th><td class="src" role="cell">Alte Wasserleitungen in Altbauten, Altanstriche, Schießsport, berufliche Exposition</td></tr>
+        <tr role="row"><td class="sym" role="cell">Cd</td><th class="name" scope="row" role="rowheader">Cadmium</th><td class="src" role="cell">Tabakrauch, bestimmte Lebensmittel und Düngemittel, industrielle Belastungen</td></tr>
+        <tr role="row"><td class="sym" role="cell">As</td><th class="name" scope="row" role="rowheader">Arsen</th><td class="src" role="cell">Reis und Reisprodukte, regional belastetes Trinkwasser</td></tr>
+        <tr role="row"><td class="sym" role="cell">Al</td><th class="name" scope="row" role="rowheader">Aluminium</th><td class="src" role="cell">Kochgeschirr und Folie bei säurehaltigen Speisen, Kosmetika, Zusatzstoffe</td></tr>
+      </tbody>
+    </table>
+    <p class="foot-note">Weitere mögliche Quellen: Feinstaub, Verpackungen, Tätowierfarben und belastete Materialien. Welche davon in Ihrem Fall relevant sein könnten, klären wir in der Anamnese. Je nach Exposition werden weitere Metalle betrachtet.</p>
+  </div>
+</section>
+
+<!-- ABLAUF -->
+<section class="soft" id="ablauf" aria-labelledby="h-ablauf">
+  <div class="wrap">
+    <div class="sec-split">
+      <div class="sec-head">
+        <p class="label">Behandlungsweg</p>
+        <h2 id="h-ablauf">So läuft die Chelattherapie ab</h2>
+        <p class="sub">Gründlich eingeordnet, individuell geplant, kontrolliert begleitet. Anamnese, Blutentnahme und Infusionen finden direkt in der Praxis in Lichtenrade statt.</p>
+      </div>
+      <figure class="media">
+        <div class="ph"><img src="{{IMG_PRAXIS}}" srcset="{{IMG_PRAXIS_SRCSET}}" sizes="(max-width: 640px) 100vw, (max-width: 1020px) calc(50vw - 56px), (max-width: 1264px) calc(50vw - 72px), (max-width: 1599px) 540px, 584px" width="{{IMG_PRAXIS_W}}" height="{{IMG_PRAXIS_H}}" loading="lazy" decoding="async" alt="Nina Klimek im Gespräch mit einer Patientin im Flur ihrer Naturheilpraxis"></div>
+      </figure>
+    </div>
+    <ol class="timeline" role="list">
+      <li><div class="dot" aria-hidden="true">01</div><h3>Erstanamnese</h3><span class="meta"><span>60 oder 90 bis 120&nbsp;Min.</span> <span>vor&nbsp;Ort oder&nbsp;online</span></span><p>Vorgeschichte, mögliche Belastungsquellen, Beschwerden, Vorerkrankungen und vorhandene Befunde.</p></li>
+      <li><div class="dot" aria-hidden="true">02</div><h3>Schwermetalltest</h3><span class="meta"><span>Blut und/oder Urin</span></span><p>Gezielte Untersuchung je nach Metall und Fragestellung, plus Nierenwerte und Mineralstoffstatus.</p></li>
+      <li><div class="dot" aria-hidden="true">03</div><h3>Befund &amp; Plan</h3><span class="meta"><span>Folgetermin</span> <span>60&nbsp;Min.</span></span><p>Gemeinsame Einordnung. Ist eine Chelattherapie angezeigt, folgt ein individueller Plan zu Dosierung, Abständen und Anzahl.</p></li>
+      <li><div class="dot" aria-hidden="true">04</div><h3>Begleitete Ausleitung</h3><span class="meta"><span>Infusionen</span> <span>Kontrolle</span></span><p><span class="nw">EDTA-Infusionen</span> in ruhiger Atmosphäre, Laborkontrollen, Mineralstoffausgleich und Anpassung an den Verlauf.</p></li>
+    </ol>
+  </div>
+</section>
+
+<!-- SICHERHEIT -->
+<section id="sicherheit" aria-labelledby="h-sicher">
+  <div class="wrap">
+    <div class="sec-head">
+      <p class="label">Sicherheit</p>
+      <h2 id="h-sicher">Mehr als nur die Infusion</h2>
+      <p class="sub">Eine gute Ausleitung endet nicht beim Chelatbildner. Diese Punkte behalte ich während der gesamten Therapie im Blick.</p>
+    </div>
+    <div class="checks">
+      <div class="check"><div class="ic"><svg width="18" height="18" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M3 8.5l3 3 7-7" stroke="currentColor" stroke-width="1.8"/></svg></div><div><h3>Nierenfunktion</h3><p>Kontrolle vor Beginn und begleitend, denn die gebundenen Metalle werden über die Nieren ausgeschieden.</p></div></div>
+      <div class="check"><div class="ic"><svg width="18" height="18" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M3 8.5l3 3 7-7" stroke="currentColor" stroke-width="1.8"/></svg></div><div><h3>Mineralstoffe</h3><p>EDTA kann auch Zink, Magnesium oder Calcium binden. Der Mineralstoffstatus wird gezielt ausgeglichen.</p></div></div>
+      <div class="check"><div class="ic"><svg width="18" height="18" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M3 8.5l3 3 7-7" stroke="currentColor" stroke-width="1.8"/></svg></div><div><h3>Flüssigkeit &amp; Darm</h3><p>Flüssigkeitshaushalt und Darmfunktion werden mitberücksichtigt, um die Ausscheidung zu unterstützen.</p></div></div>
+      <div class="check"><div class="ic"><svg width="18" height="18" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M3 8.5l3 3 7-7" stroke="currentColor" stroke-width="1.8"/></svg></div><div><h3>Eignung vorab geprüft</h3><p>Nicht geeignet u.&nbsp;a. bei eingeschränkter Nierenfunktion, in Schwangerschaft und Stillzeit oder bei bestimmten Vorerkrankungen.</p></div></div>
+      <div class="check"><div class="ic"><svg width="18" height="18" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M3 8.5l3 3 7-7" stroke="currentColor" stroke-width="1.8"/></svg></div><div><h3>Quellen reduzieren</h3><p>Gemeinsam identifizieren wir vermeidbare Belastungsquellen im Alltag.</p></div></div>
+      <div class="check"><div class="ic"><svg width="18" height="18" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M3 8.5l3 3 7-7" stroke="currentColor" stroke-width="1.8"/></svg></div><div><h3>Verlauf statt Schema</h3><p>Dosierung, Abstände und Anzahl der Infusionen richten sich nach Befund und Verlauf.</p></div></div>
+    </div>
+  </div>
+</section>
+
+<!-- ERSTGESPRÄCH / ANRUF -->
+<section class="soft" id="erstgespraech" aria-labelledby="h-call">
+  <div class="wrap">
+    <div class="callnow">
+      <div class="call-text">
+        <p class="label">Kostenloses Erstgespräch</p>
+        <h2 id="h-call">Klarheit beginnt mit einem Anruf.</h2>
+        <p class="sub">Sie vermuten eine Belastung durch Metalle oder möchten wissen, ob eine Abklärung für Sie sinnvoll ist? In&nbsp;zehn Minuten am Telefon klären wir Ihre ersten Fragen, kostenlos und&nbsp;unverbindlich.</p>
+        <ul class="checks-mini" role="list">
+          <li><svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M3 8.5l3 3 7-7" stroke="currentColor" stroke-width="1.8"/></svg>Einschätzung Ihrer Situation und möglicher Belastungsquellen</li>
+          <li><svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M3 8.5l3 3 7-7" stroke="currentColor" stroke-width="1.8"/></svg>Welche Diagnostik in Ihrem Fall sinnvoll sein kann</li>
+          <li><svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M3 8.5l3 3 7-7" stroke="currentColor" stroke-width="1.8"/></svg>Ob meine Arbeitsweise zu Ihnen passt</li>
+        </ul>
+      </div>
+      <div class="call-side">
+        <figure class="call-img"><div class="ph"><img src="{{IMG_ERSTGESPRAECH}}" srcset="{{IMG_ERSTGESPRAECH_SRCSET}}" sizes="(max-width: 640px) 100vw, (orientation: landscape) and (max-height: 500px) and (max-width: 819px) calc(91.2vw - 58px), (orientation: landscape) and (max-height: 500px) and (max-width: 1020px) calc(50vw - 84px), (max-width: 1020px) calc(100vw - 148px), (max-width: 1264px) calc(50vw - 116px), (max-width: 1599px) 477px, 520px" width="{{IMG_ERSTGESPRAECH_W}}" height="{{IMG_ERSTGESPRAECH_H}}" loading="lazy" decoding="async" alt="Heilpraktikerin Nina Klimek im persönlichen Gespräch mit einer Patientin"></div></figure>
+        <div class="callbox">
+          <p class="cb-label">Direkt erreichbar</p>
+          <a class="phone" href="tel:{{PHONE_INTL}}" data-mcta-hide>{{PHONE_DE}}</a>
+          <p class="meta"><span>kostenlos</span> <span>10&nbsp;Min.</span> <span>unverbindlich</span></p>
+          <div class="cta-row" data-mcta-hide>
+            <a class="btn btn-primary js-call" href="tel:{{PHONE_INTL}}"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M5 4h4l2 5-2.5 1.5a11 11 0 005 5L15 13l5 2v4a2 2 0 01-2 2A16 16 0 013 6a2 2 0 012-2" stroke="currentColor" stroke-width="1.6"/></svg><span class="t">Jetzt anrufen</span></a>
+            <a class="btn btn-ghost" href="{{DOCTOLIB}}" rel="noopener" target="_blank">Online buchen<span class="vh"> (öffnet in neuem Tab)</span></a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ÜBER -->
+<section id="ueber" aria-labelledby="h-ueber">
+  <div class="wrap about">
+    <div class="photo">
+      <picture>
+        <source srcset="{{PORTRAIT_SRCSET}}" sizes="(max-width: 640px) calc(100vw - 32px), (max-width: 1020px) calc(41.7vw - 46px), (max-width: 1264px) calc(41.7vw - 60px), (max-width: 1599px) 450px, 487px" type="image/webp">
+        <img src="{{PORTRAIT_JPG}}" width="{{PORTRAIT_W}}" height="{{PORTRAIT_H}}" alt="Heilpraktikerin Nina Klimek, Berlin" loading="lazy" decoding="async">
+      </picture>
+    </div>
+    <div class="about-head">
+      <p class="label">Ihre Heilpraktikerin</p>
+      <h2 id="h-ueber">Nina Klimek</h2>
+      <blockquote>„Ich verspreche keine schnellen Lösungen. Sie können von mir aber eine persönliche, strukturierte und ehrliche Begleitung erwarten.“</blockquote>
+    </div>
+    <div class="about-copy">
+      <p class="about-text">Heilpraktikerin in <span class="nw">Berlin-Lichtenrade</span> mit Schwerpunkten in <span class="nw">Infusions- und</span> Chelattherapie, Darmgesundheit und klinischer <span class="nw">Psycho-Neuro-Immunologie</span> (kPNI). Ich nehme mir Zeit, Befunde gründlich einzuordnen, und erkläre die Überlegungen hinter jedem Schritt.</p>
+      <ul class="chips" role="list">
+        <li><b>Erlaubnis</b> nach §&nbsp;1 HeilprG (2024)</li>
+        <li><b>Mitglied</b> Freie Heilpraktiker e.V.</li>
+        <li><b>Masterstudium kPNI</b> Universität Córdoba (2025&nbsp;bis&nbsp;2027)</li>
+        <li><b>Infusionstherapie</b> Rezepturen I &amp; II</li>
+        <li><b>Orthomolekulare Medizin</b></li>
+        <li><b>Mikronährstoffberaterin</b></li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<!-- FAQ -->
+<section class="soft" id="faq" aria-labelledby="h-faq">
+  <div class="wrap faq-grid">
+    <div class="sec-head">
+      <p class="label">FAQ</p>
+      <h2 id="h-faq">Häufige Fragen zur Chelattherapie</h2>
+      <p class="sub">Ihre Frage ist nicht dabei? Im kostenlosen Kennenlern-&#8288;Telefonat nehme ich mir Zeit dafür.</p>
+    </div>
+    <div class="faq">
+{{FAQ}}
+    </div>
+  </div>
+</section>
+
+<!-- KONTAKT -->
+<section id="kontakt" aria-labelledby="h-kontakt">
+  <div class="wrap">
+    <div class="contact-card">
+      <div>
+        <p class="label">Termin &amp; Kontakt</p>
+        <h2 id="h-kontakt">Schwermetall&shy;belastung abklären lassen</h2>
+        <p>Buchen Sie eine Erstanamnese: Wir schauen uns Ihre Situation an, planen die passende Diagnostik und besprechen die nächsten Schritte.</p>
+        <div class="cta-row" data-mcta-hide>
+          <a class="btn btn-primary" href="{{DOCTOLIB}}" rel="noopener" target="_blank">Termin über Doctolib<span class="vh"> (öffnet in neuem Tab)</span></a>
+          <a class="btn btn-ghost js-call" href="tel:{{PHONE_INTL}}"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M5 4h4l2 5-2.5 1.5a11 11 0 005 5L15 13l5 2v4a2 2 0 01-2 2A16 16 0 013 6a2 2 0 012-2" stroke="currentColor" stroke-width="1.6"/></svg><span class="t">Anrufen</span></a>
+        </div>
+      </div>
+      <address class="nap" data-mcta-hide>
+        <div><span class="nap-l">Adresse</span> {{PRAXIS}}<br>{{STREET_NB}}<br>{{ZIP}}&nbsp;<span class="nw">{{CITY}}-{{DISTRICT}}</span><br><a href="{{MAPS}}" rel="noopener" target="_blank">Route planen <span aria-hidden="true">→</span><span class="vh"> (öffnet in neuem Tab)</span></a></div>
+        <div><span class="nap-l">Telefon</span> <a href="tel:{{PHONE_INTL}}">{{PHONE_DE}}</a></div>
+        <div><span class="nap-l">E-Mail</span> <a href="mailto:{{EMAIL}}?subject=Anfrage%20Chelattherapie">{{EMAIL}}</a></div>
+      </address>
+    </div>
+  </div>
+</section>
+
+</main>
+
+<footer class="site">
+  <div class="wrap">
+    <div class="foot-grid">
+      <div class="foot-text">
+        <p><strong>Hinweis:</strong> {{HINWEIS}}</p>
+        <p>Inhaltlich verantwortlich{{GEPRUEFT}}: <span class="nw">Nina Klimek</span>, Heilpraktikerin <span class="foot-stand">Stand: <time class="nw" datetime="{{UPDATED}}">{{UPDATED_DE}}</time></span></p>
+      </div>
+      <nav aria-label="Rechtliches">
+        <a href="{{MAIN_SITE}}">Hauptwebsite</a>
+        <a href="{{IMPRESSUM}}">Impressum</a>
+        <a href="{{DATENSCHUTZ}}">Datenschutz</a>
+      </nav>
+    </div>
+  </div>
+</footer>
+
+<nav class="mcta" aria-label="Schnellkontakt">
+  <a class="btn btn-ghost" href="tel:{{PHONE_INTL}}"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M5 4h4l2 5-2.5 1.5a11 11 0 005 5L15 13l5 2v4a2 2 0 01-2 2A16 16 0 013 6a2 2 0 012-2" stroke="currentColor" stroke-width="1.6"/></svg>Anrufen</a>
+  <a class="btn btn-primary" href="{{DOCTOLIB}}" rel="noopener" target="_blank">Termin buchen<span class="vh"> (öffnet in neuem Tab)</span></a>
+</nav>
+{{SCRIPTS}}
+</body>
+</html>

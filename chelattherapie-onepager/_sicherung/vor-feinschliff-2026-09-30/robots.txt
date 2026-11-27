@@ -1,0 +1,85 @@
+# robots.txt – Chelattherapie Berlin | Heilpraxis Nina Klimek
+# Ziel: maximale Sichtbarkeit in klassischen Suchmaschinen UND in KI-Suchen/Assistenten.
+# Alle Crawler sind ausdrücklich erlaubt. Nur interne Build-/Entwurfsdateien sind gesperrt.
+
+User-agent: *
+Allow: /
+Disallow: /_src/
+Disallow: /_vorschau/
+
+# --- Klassische Suchmaschinen -------------------------------------------
+User-agent: Googlebot
+Allow: /
+
+User-agent: Bingbot
+Allow: /
+
+User-agent: DuckDuckBot
+Allow: /
+
+User-agent: Applebot
+Allow: /
+
+# --- KI-Suche & Assistenten (Antworten mit Quellenangabe) ---------------
+# OpenAI / ChatGPT
+User-agent: OAI-SearchBot
+Allow: /
+
+User-agent: ChatGPT-User
+Allow: /
+
+User-agent: GPTBot
+Allow: /
+
+# Anthropic / Claude
+User-agent: Claude-SearchBot
+Allow: /
+
+User-agent: Claude-User
+Allow: /
+
+User-agent: ClaudeBot
+Allow: /
+
+# Perplexity
+User-agent: PerplexityBot
+Allow: /
+
+User-agent: Perplexity-User
+Allow: /
+
+# Google Gemini / AI Overviews (Nutzung für KI-Modelle)
+User-agent: Google-Extended
+Allow: /
+
+# Apple Intelligence
+User-agent: Applebot-Extended
+Allow: /
+
+# Microsoft Copilot nutzt Bingbot (s. o.)
+
+# Meta AI
+User-agent: meta-externalagent
+Allow: /
+
+# Amazon / Alexa
+User-agent: Amazonbot
+Allow: /
+
+# DuckDuckGo Assist
+User-agent: DuckAssistBot
+Allow: /
+
+# Mistral / Le Chat
+User-agent: MistralAI-User
+Allow: /
+
+# Common Crawl (Grundlage vieler Sprachmodelle)
+User-agent: CCBot
+Allow: /
+
+# --- Maschinenlesbare Zusatzinfos ---------------------------------------
+# KI-Zusammenfassung:  https://www.chelattherapie-berlin.de/llms.txt
+# Markdown-Version:    https://www.chelattherapie-berlin.de/index.md
+
+Sitemap: https://www.chelattherapie-berlin.de/sitemap.xml

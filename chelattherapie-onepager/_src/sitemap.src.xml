@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Erzeugt von _src/build.py aus _src/sitemap.src.xml. Nicht von Hand ändern. -->
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
+        xmlns:image="http://www.google.com/schemas/sitemap-image/1.1">
+  <url>
+    <loc>{{DOMAIN}}/</loc>
+    <lastmod>{{UPDATED}}</lastmod>
+{{SITEMAP_IMAGES}}
+  </url>
+</urlset>

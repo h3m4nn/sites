@@ -1,0 +1,593 @@
+<!doctype html>
+<html lang="de">
+<head>
+{{HEAD}}
+<style>
+:root{
+  --bg:#FFFFFF; --soft:#F3F6F6; --ink:#10212A; --muted:#55656D; --petrol:#0E5A66; --petrol-deep:#0A3F48;
+  --mint:#DCEAE9; --line:#E1E8EA; --copper:#B0714A;
+  --sans:"Manrope", system-ui, -apple-system, "Segoe UI", sans-serif;
+  --mono:"IBM Plex Mono", ui-monospace, "Cascadia Mono", monospace;
+  --w:1200px; --r:14px;
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth; scroll-padding-top:100px}
+body{margin:0; background:var(--bg); color:var(--ink); font:400 17px/1.7 var(--sans); -webkit-font-smoothing:antialiased}
+img{max-width:100%; display:block}
+a{color:var(--petrol)}
+h1,h2,h3{font-weight:600; line-height:1.12; letter-spacing:-.025em; margin:0}
+h2{font-size:clamp(30px,3.6vw,44px)}
+p{margin:0 0 1em}
+.wrap{max-width:var(--w); margin:0 auto; padding:0 28px}
+.label{font:500 12.5px/1 var(--mono); letter-spacing:.06em; text-transform:uppercase; color:var(--petrol); margin:0 0 20px; display:inline-flex; gap:10px; align-items:center}
+.label i{font-style:normal; color:var(--copper)}
+.skip{position:absolute; left:-9999px}
+.skip:focus{left:16px; top:16px; background:var(--ink); color:#fff; padding:10px 14px; z-index:100}
+:focus-visible{outline:2px solid var(--copper); outline-offset:3px}
+
+/* Top strip + header */
+.strip{background:var(--petrol-deep); color:#CFE1E2; font-size:13px}
+.strip .wrap{display:flex; justify-content:space-between; height:38px; align-items:center; gap:20px}
+.strip a{color:#fff; text-decoration:none}
+header.site{position:sticky; top:0; z-index:50; background:rgba(255,255,255,.92); backdrop-filter:blur(12px); border-bottom:1px solid var(--line)}
+.bar{display:flex; align-items:center; justify-content:space-between; height:74px}
+.brand{display:flex; align-items:center; gap:12px; text-decoration:none; color:var(--ink)}
+.brand svg{flex:none}
+.brand b{display:block; font-size:17px; font-weight:700; letter-spacing:-.01em; line-height:1.1}
+.brand span{display:block; font-size:12.5px; color:var(--muted); line-height:1.2}
+nav.main{display:flex; gap:28px; align-items:center}
+nav.main a{font-size:14.5px; font-weight:500; color:var(--muted); text-decoration:none}
+nav.main a:hover{color:var(--ink)}
+.btn{display:inline-flex; align-items:center; gap:10px; font:600 15px/1 var(--sans); text-decoration:none; padding:16px 24px; border-radius:10px; transition:all .2s}
+.btn-primary{background:var(--petrol); color:#fff}
+.btn-primary:hover{background:var(--petrol-deep)}
+.btn-ghost{background:var(--soft); color:var(--ink)}
+.btn-ghost:hover{background:var(--mint)}
+nav.main .btn{color:#fff; padding:12px 18px; font-size:14px}
+
+/* Hero */
+.hero{padding:88px 0 96px; background:
+  radial-gradient(900px 500px at 85% 10%, #EAF3F2 0%, transparent 60%), var(--bg)}
+.hero-grid{display:grid; grid-template-columns:1.15fr .85fr; gap:72px; align-items:center}
+.hero h1{font-size:clamp(36px,5.6vw,72px); font-weight:600; letter-spacing:-.035em}
+.hero h1 span{color:var(--petrol)}
+.hero .lead{font-size:20px; color:var(--muted); max-width:33em; margin:28px 0 38px}
+.cta-row{display:flex; gap:12px; flex-wrap:wrap}
+.table{display:grid; grid-template-columns:repeat(3,1fr); gap:12px}
+.el{aspect-ratio:1; border:1px solid var(--line); background:#fff; border-radius:var(--r); padding:16px 16px 14px; display:flex; flex-direction:column; justify-content:space-between; box-shadow:0 1px 0 rgba(16,33,42,.03)}
+.el small{font:500 12px/1 var(--mono); color:var(--muted)}
+.el b{font-size:44px; font-weight:600; letter-spacing:-.03em; color:var(--petrol-deep); line-height:1}
+.el span{font-size:13px; color:var(--muted)}
+.el.hl{background:var(--petrol); border-color:var(--petrol)}
+.el.hl b,.el.hl small,.el.hl span{color:#fff}
+.el.more{background:var(--soft); border-style:dashed}
+.el.more b{color:var(--copper)}
+/* Hero-Kacheln erscheinen beim Laden nacheinander (in B ist Ninas Foto erst unter „Über mich“) */
+@media (prefers-reduced-motion:no-preference){
+  .table .el{animation:tile .6s cubic-bezier(.2,.7,.2,1) both}
+  .table .el:nth-child(2){animation-delay:.08s} .table .el:nth-child(3){animation-delay:.16s}
+  .table .el:nth-child(4){animation-delay:.24s} .table .el:nth-child(5){animation-delay:.32s} .table .el:nth-child(6){animation-delay:.4s}
+}
+@keyframes tile{from{opacity:0; transform:translateY(16px) scale(.96)}to{opacity:1; transform:none}}
+.table-cap{grid-column:1/-1; font:400 12.5px/1.5 var(--mono); color:var(--muted); margin-top:6px}
+
+/* Facts */
+.facts{border-top:1px solid var(--line); border-bottom:1px solid var(--line)}
+.facts .wrap{display:grid; grid-template-columns:repeat(4,1fr)}
+.fact{padding:34px 28px 34px 0}
+.fact + .fact{padding-left:28px; border-left:1px solid var(--line)}
+.fact b{display:block; font-size:30px; font-weight:600; letter-spacing:-.03em}
+.fact span{font-size:14.5px; color:var(--muted)}
+
+section{padding:104px 0}
+.soft{background:var(--soft)}
+.sec-head{max-width:700px; margin-bottom:56px}
+.sec-head p.sub{font-size:19px; color:var(--muted); margin-top:18px}
+
+/* Auf einen Blick */
+.glance{display:grid; grid-template-columns:.8fr 1.2fr; gap:64px}
+.spec{border:1px solid var(--line); border-radius:var(--r); overflow:hidden; background:#fff}
+.spec div{display:grid; grid-template-columns:150px 1fr; gap:24px; padding:18px 24px; border-top:1px solid var(--line)}
+.spec div:first-child{border-top:0}
+.spec dt{font:500 12.5px/1.8 var(--mono); text-transform:uppercase; letter-spacing:.05em; color:var(--petrol)}
+.spec dd{margin:0; color:var(--ink)}
+.spec{margin:0}
+
+/* Mechanismus */
+.flow{display:grid; grid-template-columns:repeat(4,1fr); gap:0; margin-top:10px; counter-reset:f}
+.flow div{position:relative; padding:0 26px 0 0}
+.flow div::before{counter-increment:f; content:"0" counter(f); display:block; font:500 12px/1 var(--mono); color:var(--copper); margin-bottom:14px}
+.flow svg{display:block; margin-bottom:18px}
+.flow h3{font-size:19px; margin-bottom:8px}
+.flow p{font-size:15.5px; color:var(--muted); margin:0}
+.flow div:not(:last-child)::after{content:""; position:absolute; top:62px; right:12px; width:28px; height:1px; background:var(--line)}
+.mech-text{display:grid; grid-template-columns:1fr 1fr; gap:56px; margin-top:64px; padding-top:48px; border-top:1px solid var(--line)}
+.callout{border-left:3px solid var(--copper); padding:4px 0 4px 22px; font-size:20px; font-weight:500; letter-spacing:-.01em}
+
+/* Metalle-Tabelle */
+.mtable{width:100%; border-collapse:collapse; background:#fff; border-radius:var(--r); overflow:hidden; border:1px solid var(--line)}
+.mtable th,.mtable td{text-align:left; padding:20px 24px; border-top:1px solid var(--line); vertical-align:top}
+.mtable thead th{border-top:0; font:500 12px/1 var(--mono); letter-spacing:.06em; text-transform:uppercase; color:var(--muted); background:var(--soft)}
+.mtable td.sym{font-size:26px; font-weight:600; color:var(--petrol-deep); width:90px; letter-spacing:-.02em}
+.mtable td.name{font-weight:600; width:200px}
+.mtable td.src{color:var(--muted)}
+.foot-note{font-size:15px; color:var(--muted); margin-top:22px; max-width:780px}
+
+/* Ablauf */
+.timeline{display:grid; grid-template-columns:repeat(4,1fr); gap:20px; position:relative; list-style:none; margin:0; padding:0}
+.timeline::before{content:""; position:absolute; top:23px; left:24px; right:24px; height:1px; background:var(--line)}
+.timeline li{position:relative}
+.timeline .dot{width:48px; height:48px; border-radius:50%; background:#fff; border:1px solid var(--petrol); color:var(--petrol); display:grid; place-items:center; font:500 14px/1 var(--mono); margin-bottom:26px; position:relative}
+.timeline li:first-child .dot{background:var(--petrol); color:#fff}
+.timeline h3{font-size:21px; margin-bottom:6px}
+.timeline .meta{display:block; font:500 12px/1.4 var(--mono); color:var(--copper); margin-bottom:14px}
+.timeline p{font-size:15.5px; color:var(--muted); margin:0}
+
+/* Sicherheit */
+.checks{display:grid; grid-template-columns:1fr 1fr; gap:0 56px}
+.check{display:grid; grid-template-columns:40px 1fr; gap:18px; padding:26px 0; border-top:1px solid var(--line)}
+.check .ic{width:40px; height:40px; border-radius:10px; background:var(--mint); color:var(--petrol-deep); display:grid; place-items:center}
+.check h3{font-size:18px; margin-bottom:6px}
+.check p{font-size:15.5px; color:var(--muted); margin:0}
+
+/* Evidenz */
+
+/* Anruf-CTA */
+.callnow{display:grid; grid-template-columns:1.15fr .85fr; gap:56px; align-items:center; background:#fff; border:1px solid var(--line); border-radius:20px; padding:56px}
+.callnow .sub{font-size:18px; color:var(--muted); margin:20px 0 0}
+.callbox{background:var(--petrol); color:#fff; border-radius:16px; padding:34px 32px; box-shadow:0 24px 50px -28px rgba(14,90,102,.6)}
+.callbox small{font:500 12px/1 var(--mono); letter-spacing:.06em; text-transform:uppercase; color:#A9D2D3}
+.callbox .phone{display:block; font-size:clamp(30px,3.4vw,40px); font-weight:600; letter-spacing:-.02em; color:#fff; text-decoration:none; margin:14px 0 6px}
+.callbox .meta{font:400 13px/1.5 var(--mono); color:#BFDCDC; margin:0 0 24px}
+.callbox .cta-row .btn-primary{background:#fff; color:var(--petrol-deep)}
+.callbox .cta-row .btn-primary:hover{background:var(--mint)}
+.callbox .cta-row .btn-ghost{background:rgba(255,255,255,.12); color:#fff}
+.callnow .checks-mini{list-style:none; padding:0; margin:26px 0 0; display:grid; gap:10px}
+.callnow .checks-mini li{display:flex; gap:12px; align-items:flex-start; font-size:15.5px; color:var(--ink)}
+.callnow .checks-mini svg{flex:none; margin-top:5px; color:var(--petrol)}
+
+/* Über */
+.about{display:grid; grid-template-columns:.85fr 1.15fr; gap:72px; align-items:center}
+.about .photo{border-radius:20px; overflow:hidden; aspect-ratio:4/5; background:var(--soft)}
+.about .photo img{width:100%; height:100%; object-fit:cover; object-position:50% 20%}
+.about blockquote{margin:28px 0; font-size:21px; font-weight:500; letter-spacing:-.01em; line-height:1.5; padding-left:22px; border-left:3px solid var(--petrol)}
+.chips{display:flex; flex-wrap:wrap; gap:8px; list-style:none; padding:0; margin:26px 0 0}
+.chips li{font-size:13.5px; padding:8px 14px; background:var(--soft); border-radius:999px; color:var(--ink)}
+.chips li b{color:var(--petrol); font-weight:600}
+
+/* Kosten */
+
+/* FAQ */
+.faq-grid{display:grid; grid-template-columns:.7fr 1.3fr; gap:72px; align-items:start}
+.faq-grid .sec-head{position:sticky; top:130px}
+.faq-item{border-top:1px solid var(--line)}
+.faq-item:last-child{border-bottom:1px solid var(--line)}
+.faq-item summary{list-style:none; cursor:pointer; padding:24px 48px 24px 0; position:relative}
+.faq-item summary::-webkit-details-marker{display:none}
+.faq-item summary h3{font-size:19px; letter-spacing:-.015em}
+.faq-item summary::before,.faq-item summary::after{content:""; position:absolute; right:10px; top:50%; width:14px; height:1.6px; background:var(--petrol); transition:transform .2s}
+.faq-item summary::after{transform:rotate(90deg)}
+.faq-item[open] summary::after{transform:rotate(0)}
+.faq-answer{padding:0 48px 26px 0; color:var(--muted)}
+
+/* Kontakt */
+.contact-card{background:var(--petrol-deep); color:#D6E6E6; border-radius:24px; padding:64px; display:grid; grid-template-columns:1.15fr .85fr; gap:64px; position:relative; overflow:hidden}
+.contact-card::after{content:""; position:absolute; right:-120px; top:-120px; width:380px; height:380px; border-radius:50%; border:1px solid rgba(255,255,255,.08); box-shadow:0 0 0 60px rgba(255,255,255,.03), 0 0 0 120px rgba(255,255,255,.02)}
+.contact-card h2{color:#fff}
+.contact-card .label{color:#9FCBCC}
+.contact-card p{color:#BFD6D6; font-size:18px; margin:20px 0 34px}
+.contact-card .btn-primary{background:#fff; color:var(--petrol-deep)}
+.contact-card .btn-ghost{background:rgba(255,255,255,.08); color:#fff}
+.nap{font-style:normal; display:grid; gap:0; position:relative; z-index:1}
+.nap div{padding:18px 0; border-top:1px solid rgba(255,255,255,.12)}
+.nap span{display:block; font:500 12px/1 var(--mono); text-transform:uppercase; letter-spacing:.06em; color:#8FB9BA; margin-bottom:8px}
+.nap a{color:#fff; text-decoration:none}
+
+footer.site{padding:44px 0 110px; font-size:13.5px; color:var(--muted)}
+footer.site .wrap{display:grid; grid-template-columns:1.6fr 1fr; gap:60px}
+footer.site nav{display:flex; gap:22px; flex-wrap:wrap; justify-content:flex-end}
+footer.site a{color:var(--muted)}
+
+/* Bilder im Text */
+.media figcaption{font:400 12.5px/1.5 var(--mono); color:var(--muted); opacity:1}
+.media-was{margin-top:34px}
+.media-was .ph{aspect-ratio:4/3}
+.media-was img{object-position:50% 40%}
+.soft .media .ph{background:#E3EAEA}
+
+.mcta{display:none}
+nav.main a.m-only{display:none}
+.menu-btn{color:var(--petrol-deep); border-color:var(--line); border-radius:10px}
+
+@media (max-width:1060px){
+  nav.main a:not(.btn){display:none}
+  .menu-btn{display:inline-flex}
+  nav.main{margin-left:auto}
+  html.nav-open nav.main{position:absolute; top:100%; left:0; right:0; display:flex; flex-direction:column; align-items:stretch; gap:0; padding:4px 28px 24px; background:#fff; border-bottom:1px solid var(--line); box-shadow:0 30px 40px -30px rgba(16,33,42,.3)}
+  html.nav-open nav.main a:not(.btn){display:block; padding:15px 0; font-size:18px; font-weight:600; color:var(--ink); border-bottom:1px solid var(--line)}
+  html.nav-open nav.main .btn{display:inline-flex; justify-content:center; margin-top:18px; padding:17px 24px; font-size:16px}
+  .hero-grid,.glance,.about,.faq-grid,.callnow,.contact-card,.mech-text{grid-template-columns:minmax(0,1fr); gap:40px}
+  .table{max-width:460px}
+  .facts .wrap{grid-template-columns:1fr 1fr}
+  .fact:nth-child(3){padding-left:0; border-left:0}
+  .fact{border-top:1px solid var(--line)}
+  .flow,.timeline{grid-template-columns:1fr 1fr; gap:40px 28px}
+  .flow div::after,.timeline::before{display:none}
+  .checks{grid-template-columns:1fr}
+  .faq-grid .sec-head{position:static}
+  .about .photo{max-width:420px}
+  footer.site .wrap{grid-template-columns:1fr; gap:20px}
+  footer.site nav{justify-content:flex-start}
+}
+@media (max-width:640px){
+  body{font-size:16.5px; line-height:1.65}
+  .wrap{padding:0 16px}
+  .strip{display:none}
+  section{padding:58px 0}
+  h2{font-size:30px}
+  .bar{height:62px}
+  .brand svg{width:34px; height:34px}
+  .brand b{font-size:16px}
+  .brand span{font-size:12px}
+  .sec-head{margin-bottom:32px}
+  .sec-head p.sub{font-size:17px}
+  /* Hero: kein seitliches Scrollen mehr, Buttons volle Breite, kleinere Kacheln */
+  .hero{padding:30px 0 44px}
+  .hero-grid{gap:30px}
+  .hero h1{font-size:36px; line-height:1.1}
+  .hero .lead{font-size:17.5px; margin:18px 0 26px}
+  .cta-row{flex-direction:column}
+  .cta-row .btn{justify-content:center; min-height:54px}
+  .table{max-width:none; gap:8px; grid-template-columns:repeat(3,minmax(0,1fr))}
+  .el{padding:10px 11px 9px; border-radius:12px}
+  .el b{font-size:30px}
+  .el small{font-size:11px}
+  .el span{font-size:12px; line-height:1.25}
+  /* Kennzahlen 2 × 2 statt 4 untereinander */
+  .facts .wrap{grid-template-columns:1fr 1fr}
+  .fact,.fact + .fact{padding:18px 0; border-left:0}
+  .fact:nth-child(even){padding-left:16px; border-left:1px solid var(--line)}
+  .fact:nth-child(-n+2){border-top:0}
+  .fact b{font-size:21px}
+  .fact span{display:block; font-size:13.5px; line-height:1.45; margin-top:4px}
+  .spec div{grid-template-columns:1fr; gap:4px; padding:16px 18px}
+  /* Wirkprinzip 2 × 2 */
+  .flow{grid-template-columns:1fr 1fr; gap:30px 18px}
+  .flow div{padding:0}
+  .flow svg{width:44px; height:44px; margin-bottom:12px}
+  .flow h3{font-size:17px}
+  .flow p{font-size:14.5px}
+  .mech-text{margin-top:40px; padding-top:32px; gap:24px}
+  .callout{font-size:18px}
+  .mtable thead{display:none}
+  .mtable, .mtable tbody, .mtable tr, .mtable td{display:block; width:auto!important}
+  .mtable tr{border-top:1px solid var(--line); padding:14px 18px; display:grid; grid-template-columns:48px 1fr; column-gap:12px}
+  .mtable tr:first-child{border-top:0}
+  .mtable td{border:0; padding:1px 0}
+  .mtable td.sym{grid-row:1/3; font-size:24px}
+  .mtable td.src{font-size:15px}
+  /* Ablauf als senkrechte Zeitleiste */
+  .timeline{grid-template-columns:1fr; gap:26px}
+  .timeline li{display:grid; grid-template-columns:40px 1fr; column-gap:16px}
+  .timeline .dot{width:40px; height:40px; margin:0; grid-row:1/4; font-size:12.5px}
+  .timeline li:not(:last-child)::after{content:""; position:absolute; left:20px; top:46px; bottom:-22px; width:1px; background:var(--line)}
+  .timeline h3{font-size:19px; margin-top:6px}
+  .checks .check{padding:20px 0}
+  .callnow,.contact-card{padding:26px 18px 22px; gap:26px}
+  .callnow .sub{font-size:16.5px}
+  .callbox{padding:24px 18px}
+  .callbox .cta-row .btn{justify-content:center}
+  .about{gap:28px}
+  .about .photo{max-width:none; aspect-ratio:1/1}
+  .about blockquote{font-size:18.5px}
+  .faq-item summary{padding:20px 38px 20px 0}
+  .faq-item summary h3{font-size:17.5px}
+  .faq-answer{padding:0 0 22px}
+  .contact-card p{font-size:16.5px; margin:16px 0 26px}
+  .nap a{display:inline-block; padding:10px 0}
+  footer.site{padding-bottom:calc(96px + env(safe-area-inset-bottom))}
+  footer.site nav a{display:inline-block; padding:12px 0}
+  nav.main .btn{display:none}
+  html.nav-open nav.main{padding:4px 16px 22px}
+  .mcta{display:flex; position:fixed; left:10px; right:10px; bottom:calc(10px + env(safe-area-inset-bottom)); z-index:60; gap:8px}
+  .mcta a{justify-content:center; min-height:52px; box-shadow:0 10px 30px -10px rgba(0,0,0,.35)}
+  .mcta .btn-ghost{flex:0 0 auto; background:#fff; border:1px solid var(--line); padding:0 18px}
+  .mcta .btn-primary{flex:1}
+}
+@media (prefers-reduced-motion:reduce){html{scroll-behavior:auto} *{transition:none!important}}
+</style>
+</head>
+<body>
+<a class="skip" href="#inhalt">Zum Inhalt springen</a>
+
+<div class="strip">
+  <div class="wrap">
+    <span>Steinstraße 41D · 12307 Berlin-Lichtenrade</span>
+    <span><a href="tel:{{PHONE_INTL}}">{{PHONE_DE}}</a><span class="hide-s"> · <a href="mailto:{{EMAIL}}">{{EMAIL}}</a></span></span>
+  </div>
+</div>
+<header class="site" id="top">
+  <div class="wrap bar">
+    <a class="brand" href="#top" aria-label="Heilpraxis Nina Klimek, zum Seitenanfang">
+      <svg width="38" height="38" viewBox="0 0 64 64" aria-hidden="true"><rect width="64" height="64" rx="14" fill="#0E5A66"/><circle cx="32" cy="32" r="7" fill="#E9B893"/><path d="M17 19c8-6 22-6 30 0M17 45c8 6 22 6 30 0M15 22c-6 7-6 13 0 20M49 22c6 7 6 13 0 20" stroke="#fff" stroke-width="2.6" fill="none" stroke-linecap="round"/></svg>
+      <span><b>Nina Klimek</b><span>Heilpraktikerin · Chelattherapie Berlin</span></span>
+    </a>
+    <nav class="main" id="nav-main" aria-label="Hauptnavigation">
+      <a href="#wirkprinzip">Wirkprinzip</a>
+      <a href="#ablauf">Ablauf</a>
+      <a href="#sicherheit">Sicherheit</a>
+      <a href="#erstgespraech">Erstgespräch</a>
+      <a href="#faq">FAQ</a>
+      <a class="m-only" href="#kontakt">Kontakt</a>
+      <a class="btn btn-primary" href="{{DOCTOLIB}}" rel="noopener" target="_blank">Termin buchen</a>
+    </nav>
+    <button class="menu-btn" type="button" aria-expanded="false" aria-controls="nav-main" aria-label="Menü öffnen"><span></span><span></span></button>
+  </div>
+</header>
+
+<main id="inhalt">
+
+<section class="hero" aria-labelledby="h1">
+  <div class="wrap hero-grid">
+    <div>
+      <p class="label">Heilpraktikerin <i>/</i> Berlin-Lichtenrade</p>
+      <h1 id="h1">Chelattherapie in Berlin: <span>Schwermetalle erkennen und gezielt ausleiten.</span></h1>
+      <p class="lead">Erst die Diagnostik, dann die Entscheidung: Anhand von Anamnese und Laborbefunden prüfe ich, ob eine Belastung durch Metalle vorliegt, und plane eine EDTA-Ausleitung nur dort, wo sie für Sie sinnvoll ist.</p>
+      <div class="cta-row">
+        <a class="btn btn-primary" href="{{DOCTOLIB}}" rel="noopener" target="_blank">Erstanamnese buchen
+          <svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="1.6"/></svg></a>
+        <a class="btn btn-ghost" href="#erstgespraech" data-tel="tel:{{PHONE_INTL}}">Kostenloses Erstgespräch</a>
+      </div>
+    </div>
+    <div class="table" role="img" aria-label="Fünf Metalle, die in der Diagnostik betrachtet werden: Quecksilber, Blei, Cadmium, Arsen, Aluminium">
+      <div class="el hl"><small>80</small><b>Hg</b><span>Quecksilber</span></div>
+      <div class="el"><small>82</small><b>Pb</b><span>Blei</span></div>
+      <div class="el"><small>48</small><b>Cd</b><span>Cadmium</span></div>
+      <div class="el"><small>33</small><b>As</b><span>Arsen</span></div>
+      <div class="el"><small>13</small><b>Al</b><span>Aluminium</span></div>
+      <div class="el more"><small>&nbsp;</small><b>+</b><span>je nach Exposition</span></div>
+      <p class="table-cap">Metalle, die im Rahmen der Diagnostik betrachtet werden.</p>
+    </div>
+  </div>
+</section>
+
+<div class="facts">
+  <div class="wrap">
+    <div class="fact"><b>4 Schritte</b><span>von der Anamnese bis zur Verlaufskontrolle</span></div>
+    <div class="fact"><b>Blut &amp; Urin</b><span>gezielte Labordiagnostik je nach Metall</span></div>
+    <div class="fact"><b>Vor Ort &amp; online</b><span>Erstanamnese in Lichtenrade oder per Video</span></div>
+    <div class="fact"><b>10 Min.</b><span>kostenloses Kennenlern-Telefonat</span></div>
+  </div>
+</div>
+
+<!-- AUF EINEN BLICK -->
+<section id="auf-einen-blick" aria-labelledby="h-blick">
+  <div class="wrap glance">
+    <div>
+      <p class="label">Steckbrief</p>
+      <h2 id="h-blick">Chelattherapie auf einen Blick</h2>
+      <p class="sub" style="color:var(--muted); margin-top:18px">Die wichtigsten Fakten, kurz und nachvollziehbar zusammengefasst.</p>
+    </div>
+    <dl class="spec">
+      <div><dt>Verfahren</dt><dd>Infusion mit einem Chelatbildner (EDTA), der bestimmte Metallionen bindet und ihre Ausscheidung über die Nieren ermöglicht.</dd></div>
+      <div><dt>Geeignet bei</dt><dd>Verdacht auf oder nachgewiesener Belastung durch Metalle wie Blei, Cadmium, Quecksilber, Arsen oder Aluminium.</dd></div>
+      <div><dt>Diagnostik</dt><dd>Anamnese, Blut- und/oder Urinuntersuchung, Nierenwerte, Mineralstoffstatus.</dd></div>
+      <div><dt>Ablauf</dt><dd>Erstanamnese → Labor → Befund &amp; Therapieplan → begleitete Infusionen.</dd></div>
+      <div><dt>Erstgespräch</dt><dd>Kostenloses, unverbindliches Telefonat (10 Min.) zum Kennenlernen.</dd></div>
+      <div><dt>Ort</dt><dd>Heilpraxis Nina Klimek, Steinstraße 41D, 12307 Berlin-Lichtenrade</dd></div>
+    </dl>
+  </div>
+</section>
+
+<!-- WIRKPRINZIP -->
+<section class="soft" id="wirkprinzip" aria-labelledby="h-was">
+  <div class="wrap">
+    <div class="sec-head">
+      <p class="label">Wirkprinzip</p>
+      <h2 id="h-was">Was ist eine Chelattherapie?</h2>
+      <p class="sub">Der Begriff stammt vom griechischen <i>chele</i>, die Schere. Der Wirkstoff umschließt ein Metallion wie eine Zange.</p>
+    </div>
+    <div class="flow">
+      <div>
+        <svg width="56" height="56" viewBox="0 0 56 56" fill="none" aria-hidden="true"><rect x="22" y="6" width="12" height="22" rx="3" stroke="#0E5A66" stroke-width="1.6"/><path d="M28 28v10M24 44h8M28 38v6" stroke="#0E5A66" stroke-width="1.6"/></svg>
+        <h3>Infusion</h3><p>EDTA wird langsam über eine Vene am Arm verabreicht.</p></div>
+      <div>
+        <svg width="56" height="56" viewBox="0 0 56 56" fill="none" aria-hidden="true"><circle cx="28" cy="28" r="6" fill="#B0714A"/><path d="M14 16c8-6 20-6 28 0M14 40c8 6 20 6 28 0M12 19c-5 6-5 12 0 18M44 19c5 6 5 12 0 18" stroke="#0E5A66" stroke-width="1.6" stroke-linecap="round"/></svg>
+        <h3>Bindung</h3><p>Der Chelatbildner bindet bestimmte Metallionen zu einem stabilen Komplex.</p></div>
+      <div>
+        <svg width="56" height="56" viewBox="0 0 56 56" fill="none" aria-hidden="true"><path d="M22 10c-8 2-12 10-12 18s4 16 12 18c5 1 7-4 5-9-2-4-2-14 0-18 2-5 0-10-5-9zM34 10c8 2 12 10 12 18s-4 16-12 18c-5 1-7-4-5-9 2-4 2-14 0-18-2-5 0-10 5-9z" stroke="#0E5A66" stroke-width="1.6"/></svg>
+        <h3>Filterung</h3><p>Der wasserlösliche Komplex gelangt über das Blut zu den Nieren.</p></div>
+      <div>
+        <svg width="56" height="56" viewBox="0 0 56 56" fill="none" aria-hidden="true"><path d="M28 8c-7 9-12 16-12 23a12 12 0 0024 0c0-7-5-14-12-23z" stroke="#0E5A66" stroke-width="1.6"/><path d="M22 32a6 6 0 006 6" stroke="#B0714A" stroke-width="1.6"/></svg>
+        <h3>Ausscheidung</h3><p>Das gebundene Metall wird mit dem Urin ausgeschieden.</p></div>
+    </div>
+    <div class="mech-text">
+      <div>
+        <p class="callout">Keine allgemeine „Detox-Kur“, sondern eine gezielte therapeutische Maßnahme zur Ausleitung bestimmter Metalle.</p>
+        <figure class="media media-was">
+          <div class="ph"><img src="{{IMG_INFUSION}}" width="682" height="512" loading="lazy" decoding="async" alt="Heilpraktikerin Nina Klimek bereitet bei einem Patienten die Infusion am Arm vor"></div>
+          <figcaption>Langsame Infusion über eine Vene am Arm, in ruhiger Atmosphäre.</figcaption>
+        </figure>
+      </div>
+      <div>
+        <p>Die Chelattherapie, oft auch Schwermetallausleitung genannt, nutzt Chelatbildner, die bestimmte Metalle binden. In der Medizin werden sie seit Jahrzehnten eingesetzt, etwa bei akuten Bleivergiftungen. In meiner Praxis verwende ich vor allem <strong>EDTA (Ethylendiamintetraessigsäure)</strong>.</p>
+        <p>Welcher Chelatbildner infrage kommt und ob eine Ausleitung überhaupt sinnvoll ist, richtet sich nach den nachgewiesenen Metallen, Ihren Laborbefunden und Ihren individuellen Voraussetzungen. Die Infusion steht daher nie am Anfang, sondern am Ende einer sorgfältigen Diagnostik.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- METALLE -->
+<section id="metalle" aria-labelledby="h-metalle">
+  <div class="wrap">
+    <div class="sec-head">
+      <p class="label">Belastungsquellen</p>
+      <h2 id="h-metalle">Welche Metalle können eine Rolle spielen?</h2>
+      <p class="sub">Auch wer bewusst lebt, kann den Kontakt mit Umweltbelastungen nicht vollständig vermeiden. Wie gut der Körper aufgenommene Stoffe ausscheidet, ist individuell verschieden. Ein Schwermetalltest in Berlin beginnt bei mir deshalb nicht im Labor, sondern mit der Frage, woher eine Belastung stammen könnte.</p>
+    </div>
+    <table class="mtable">
+      <thead><tr><th scope="col">Symbol</th><th scope="col">Metall</th><th scope="col">Mögliche Quellen im Alltag</th></tr></thead>
+      <tbody>
+        <tr><td class="sym">Hg</td><td class="name">Quecksilber</td><td class="src">Alte Amalgamfüllungen, bestimmte Raubfische wie Thunfisch oder Schwertfisch</td></tr>
+        <tr><td class="sym">Pb</td><td class="name">Blei</td><td class="src">Alte Wasserleitungen in Altbauten, Altanstriche, Schießsport, berufliche Exposition</td></tr>
+        <tr><td class="sym">Cd</td><td class="name">Cadmium</td><td class="src">Tabakrauch, bestimmte Lebensmittel und Düngemittel, industrielle Belastungen</td></tr>
+        <tr><td class="sym">As</td><td class="name">Arsen</td><td class="src">Reis und Reisprodukte, regional belastetes Trinkwasser</td></tr>
+        <tr><td class="sym">Al</td><td class="name">Aluminium</td><td class="src">Kochgeschirr und Folie bei säurehaltigen Speisen, Kosmetika, Zusatzstoffe</td></tr>
+      </tbody>
+    </table>
+    <p class="foot-note">Weitere mögliche Quellen: Feinstaub, Verpackungen, Tätowierfarben und belastete Materialien. Welche davon in Ihrem Fall relevant sein könnten, klären wir in der Anamnese. Je nach Exposition werden weitere Metalle betrachtet.</p>
+  </div>
+</section>
+
+<!-- ABLAUF -->
+<section class="soft" id="ablauf" aria-labelledby="h-ablauf">
+  <div class="wrap">
+    <div class="sec-split">
+      <div class="sec-head">
+        <p class="label">Behandlungsweg</p>
+        <h2 id="h-ablauf">So läuft die Chelattherapie ab</h2>
+        <p class="sub">Gründlich eingeordnet, individuell geplant, kontrolliert begleitet. Anamnese, Blutentnahme und Infusionen finden direkt in der Praxis in Lichtenrade statt.</p>
+      </div>
+      <figure class="media">
+        <div class="ph"><img src="{{IMG_PRAXIS}}" width="1024" height="683" loading="lazy" decoding="async" alt="Nina Klimek im Gespräch mit einer Patientin im Flur ihrer Naturheilpraxis"></div>
+      </figure>
+    </div>
+    <ol class="timeline">
+      <li><div class="dot">01</div><h3>Erstanamnese</h3><span class="meta">60 oder 90 bis 120 Min. · vor Ort oder online</span><p>Vorgeschichte, mögliche Belastungsquellen, Beschwerden, Vorerkrankungen und vorhandene Befunde.</p></li>
+      <li><div class="dot">02</div><h3>Schwermetalltest</h3><span class="meta">Blut und/oder Urin</span><p>Gezielte Untersuchung je nach Metall und Fragestellung, plus Nierenwerte und Mineralstoffstatus.</p></li>
+      <li><div class="dot">03</div><h3>Befund &amp; Plan</h3><span class="meta">Folgetermin · 60 Min.</span><p>Gemeinsame Einordnung. Ist eine Chelattherapie angezeigt, folgt ein individueller Plan zu Dosierung, Abständen und Anzahl.</p></li>
+      <li><div class="dot">04</div><h3>Begleitete Ausleitung</h3><span class="meta">Infusionen · Kontrolle</span><p>EDTA-Infusionen in ruhiger Atmosphäre, Laborkontrollen, Mineralstoffausgleich und Anpassung an den Verlauf.</p></li>
+    </ol>
+  </div>
+</section>
+
+<!-- SICHERHEIT -->
+<section id="sicherheit" aria-labelledby="h-sicher">
+  <div class="wrap">
+    <div class="sec-head">
+      <p class="label">Sicherheit</p>
+      <h2 id="h-sicher">Mehr als nur die Infusion</h2>
+      <p class="sub">Eine gute Ausleitung endet nicht beim Chelatbildner. Diese Punkte behalte ich während der gesamten Therapie im Blick.</p>
+    </div>
+    <div class="checks">
+      <div class="check"><div class="ic"><svg width="18" height="18" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M3 8.5l3 3 7-7" stroke="currentColor" stroke-width="1.8"/></svg></div><div><h3>Nierenfunktion</h3><p>Kontrolle vor Beginn und begleitend, denn die gebundenen Metalle werden über die Nieren ausgeschieden.</p></div></div>
+      <div class="check"><div class="ic"><svg width="18" height="18" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M3 8.5l3 3 7-7" stroke="currentColor" stroke-width="1.8"/></svg></div><div><h3>Mineralstoffe</h3><p>EDTA kann auch Zink, Magnesium oder Calcium binden. Der Mineralstoffstatus wird gezielt ausgeglichen.</p></div></div>
+      <div class="check"><div class="ic"><svg width="18" height="18" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M3 8.5l3 3 7-7" stroke="currentColor" stroke-width="1.8"/></svg></div><div><h3>Flüssigkeit &amp; Darm</h3><p>Flüssigkeitshaushalt und Darmfunktion werden mitberücksichtigt, um die Ausscheidung zu unterstützen.</p></div></div>
+      <div class="check"><div class="ic"><svg width="18" height="18" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M3 8.5l3 3 7-7" stroke="currentColor" stroke-width="1.8"/></svg></div><div><h3>Eignung vorab geprüft</h3><p>Nicht geeignet u. a. bei eingeschränkter Nierenfunktion, in Schwangerschaft und Stillzeit oder bei bestimmten Vorerkrankungen.</p></div></div>
+      <div class="check"><div class="ic"><svg width="18" height="18" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M3 8.5l3 3 7-7" stroke="currentColor" stroke-width="1.8"/></svg></div><div><h3>Quellen reduzieren</h3><p>Gemeinsam identifizieren wir vermeidbare Belastungsquellen im Alltag.</p></div></div>
+      <div class="check"><div class="ic"><svg width="18" height="18" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M3 8.5l3 3 7-7" stroke="currentColor" stroke-width="1.8"/></svg></div><div><h3>Verlauf statt Schema</h3><p>Dosierung, Abstände und Anzahl der Infusionen richten sich nach Befund und Verlauf.</p></div></div>
+    </div>
+  </div>
+</section>
+
+<!-- ERSTGESPRÄCH / ANRUF -->
+<section class="soft" id="erstgespraech" aria-labelledby="h-call">
+  <div class="wrap">
+    <div class="callnow">
+      <div>
+        <figure class="call-img"><div class="ph"><img src="{{IMG_ERSTGESPRAECH}}" width="682" height="455" loading="lazy" decoding="async" alt="Heilpraktikerin Nina Klimek im persönlichen Gespräch mit einer Patientin"></div></figure>
+        <p class="label">Kostenloses Erstgespräch</p>
+        <h2 id="h-call">Klarheit beginnt mit einem Anruf.</h2>
+        <p class="sub">Sie vermuten eine Belastung durch Metalle oder möchten wissen, ob eine Abklärung für Sie sinnvoll ist? In zehn Minuten am Telefon klären wir Ihre ersten Fragen, kostenlos und unverbindlich.</p>
+        <ul class="checks-mini">
+          <li><svg width="14" height="14" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M3 8.5l3 3 7-7" stroke="currentColor" stroke-width="1.8"/></svg>Einschätzung Ihrer Situation und möglicher Belastungsquellen</li>
+          <li><svg width="14" height="14" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M3 8.5l3 3 7-7" stroke="currentColor" stroke-width="1.8"/></svg>Welche Diagnostik in Ihrem Fall sinnvoll sein kann</li>
+          <li><svg width="14" height="14" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M3 8.5l3 3 7-7" stroke="currentColor" stroke-width="1.8"/></svg>Ob meine Arbeitsweise zu Ihnen passt</li>
+        </ul>
+      </div>
+      <div class="callbox">
+        <small>Direkt erreichbar</small>
+        <a class="phone" href="tel:{{PHONE_INTL}}">{{PHONE_DE}}</a>
+        <p class="meta">kostenlos · 10 Min. · unverbindlich</p>
+        <div class="cta-row">
+          <a class="btn btn-primary js-call" href="tel:{{PHONE_INTL}}"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M5 4h4l2 5-2.5 1.5a11 11 0 005 5L15 13l5 2v4a2 2 0 01-2 2A16 16 0 013 6a2 2 0 012-2" stroke="currentColor" stroke-width="1.6"/></svg><span class="t">Jetzt anrufen</span></a>
+          <a class="btn btn-ghost" href="{{DOCTOLIB}}" rel="noopener" target="_blank">Online buchen</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ÜBER -->
+<section id="ueber" aria-labelledby="h-ueber">
+  <div class="wrap about">
+    <div class="photo">
+      <picture>
+        <source srcset="assets/nina-klimek.webp" type="image/webp">
+        <img src="assets/nina-klimek-800.jpg" width="800" height="1200" alt="Heilpraktikerin Nina Klimek, Berlin" loading="lazy">
+      </picture>
+    </div>
+    <div>
+      <p class="label">Ihre Heilpraktikerin</p>
+      <h2 id="h-ueber">Nina Klimek</h2>
+      <blockquote>„Ich verspreche keine schnellen Lösungen. Sie können von mir aber eine persönliche, strukturierte und ehrliche Begleitung erwarten.“</blockquote>
+      <p style="color:var(--muted)">Heilpraktikerin in Berlin-Lichtenrade mit Schwerpunkten in Infusions- und Chelattherapie, Darmgesundheit und klinischer Psycho-Neuro-Immunologie (kPNI). Ich nehme mir Zeit, Befunde gründlich einzuordnen, und erkläre die Überlegungen hinter jedem Schritt.</p>
+      <ul class="chips">
+        <li><b>Erlaubnis</b> nach § 1 HeilprG (2024)</li>
+        <li><b>Mitglied</b> Freie Heilpraktiker e.V.</li>
+        <li><b>Master kPNI</b> Universität Córdoba</li>
+        <li><b>Infusionstherapie</b> Rezepturen I &amp; II</li>
+        <li><b>Orthomolekulare Medizin</b></li>
+        <li><b>Mikronährstoffberaterin</b></li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<!-- FAQ -->
+<section class="soft" id="faq" aria-labelledby="h-faq">
+  <div class="wrap faq-grid">
+    <div class="sec-head">
+      <p class="label">FAQ</p>
+      <h2 id="h-faq">Häufige Fragen zur Chelattherapie</h2>
+      <p class="sub">Ihre Frage ist nicht dabei? Im kostenlosen Kennenlern-Telefonat nehme ich mir Zeit dafür.</p>
+    </div>
+    <div class="faq">
+{{FAQ}}
+    </div>
+  </div>
+</section>
+
+<!-- KONTAKT -->
+<section id="kontakt" aria-labelledby="h-kontakt">
+  <div class="wrap">
+    <div class="contact-card">
+      <div>
+        <p class="label">Termin &amp; Kontakt</p>
+        <h2 id="h-kontakt">Schwermetallbelastung abklären lassen</h2>
+        <p>Buchen Sie eine Erstanamnese: Wir schauen uns Ihre Situation an, planen die passende Diagnostik und besprechen die nächsten Schritte.</p>
+        <div class="cta-row">
+          <a class="btn btn-primary" href="{{DOCTOLIB}}" rel="noopener" target="_blank">Termin über Doctolib</a>
+          <a class="btn btn-ghost js-call" href="tel:{{PHONE_INTL}}"><span class="t">Anrufen</span></a>
+        </div>
+      </div>
+      <address class="nap">
+        <div><span>Adresse</span>Heilpraxis Nina Klimek<br>Steinstraße 41D, 12307 Berlin-Lichtenrade<br><a href="{{MAPS}}" rel="noopener" target="_blank">Route planen →</a></div>
+        <div><span>Telefon</span><a href="tel:{{PHONE_INTL}}">{{PHONE_DE}}</a></div>
+        <div><span>E-Mail</span><a href="mailto:{{EMAIL}}?subject=Anfrage%20Chelattherapie">{{EMAIL}}</a></div>
+      </address>
+    </div>
+  </div>
+</section>
+
+</main>
+
+<footer class="site">
+  <div class="wrap">
+    <p><strong>Hinweis:</strong> Die beschriebenen Verfahren sind wissenschaftlich umstritten und werden von der Schulmedizin nicht anerkannt. Beschriebene Wirkungen beruhen auf Erfahrungswissen; eine konkrete Wirkung kann nicht zugesichert werden. Diese Seite ersetzt keine ärztliche Diagnose oder Behandlung.<br><br>Inhaltlich verantwortlich und geprüft: Nina Klimek, Heilpraktikerin · Stand: <time datetime="{{UPDATED}}">{{UPDATED_DE}}</time></p>
+    <nav aria-label="Rechtliches">
+      <a href="{{MAIN_SITE}}">Hauptwebsite</a>
+      <a href="{{MAIN_SITE}}/impressum">Impressum</a>
+      <a href="{{MAIN_SITE}}/datenschutz">Datenschutz</a>
+    </nav>
+  </div>
+</footer>
+
+<div class="mcta">
+  <a class="btn btn-ghost" href="tel:{{PHONE_INTL}}">
+    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M5 4h4l2 5-2.5 1.5a11 11 0 005 5L15 13l5 2v4a2 2 0 01-2 2A16 16 0 013 6a2 2 0 012-2" stroke="currentColor" stroke-width="1.6"/></svg>Anrufen</a>
+  <a class="btn btn-primary" href="{{DOCTOLIB}}" rel="noopener" target="_blank">Termin buchen</a>
+</div>
+{{SCRIPTS}}
+</body>
+</html>

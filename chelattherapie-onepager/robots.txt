@@ -1,0 +1,46 @@
+# robots.txt für https://www.chelattherapie-berlin.de
+# Erzeugt von _src/build.py aus _src/robots.src.txt, Stand 2026-09-30. Nicht von Hand ändern.
+#
+# Alle Suchmaschinen, KI-Suchen und KI-Assistenten dürfen die ganze Seite lesen.
+# Alle Crawler stehen bewusst in EINER Gruppe zusammen mit "*". Nach RFC 9309
+# befolgt ein Crawler nur die Gruppe mit seinem Namen und ignoriert dann "*";
+# getrennte Gruppen je Bot würden Regeln unter "*" für diese Bots aushebeln.
+# Innerhalb der Gruppe keine Leerzeilen (ältere Parser beenden dort die Gruppe).
+# Interne Ordner stehen absichtlich nicht hier: Sie werden gar nicht hochgeladen.
+# Zusammenfassung für KI-Systeme: https://www.chelattherapie-berlin.de/llms.txt
+
+User-agent: *
+# Suchmaschinen (Applebot: Siri, Spotlight, Safari)
+User-agent: Googlebot
+User-agent: Bingbot
+User-agent: DuckDuckBot
+User-agent: Applebot
+User-agent: Amzn-SearchBot
+User-agent: MistralAI-Index
+User-agent: Meta-WebIndexer
+# KI-Suche mit Quellenangabe
+User-agent: OAI-SearchBot
+User-agent: Claude-SearchBot
+User-agent: PerplexityBot
+User-agent: DuckAssistBot
+# Abrufe auf Wunsch einer Person (halten sich teils nicht an robots.txt)
+User-agent: ChatGPT-User
+User-agent: Claude-User
+User-agent: Perplexity-User
+User-agent: MistralAI-User
+User-agent: Amzn-User
+User-agent: Meta-ExternalFetcher
+# KI-Training (Google-Extended und Applebot-Extended sind reine Steuer-Token)
+User-agent: GPTBot
+User-agent: ClaudeBot
+User-agent: Google-Extended
+User-agent: Applebot-Extended
+User-agent: Meta-ExternalAgent
+User-agent: Amazonbot
+User-agent: MistralAI-Training
+User-agent: CCBot
+# Nutzung: Suche und KI-Antworten erwünscht. Zu ai-train keine Angabe, bis die Bildrechte geklärt sind.
+Content-Signal: search=yes, ai-input=yes
+Allow: /
+
+Sitemap: https://www.chelattherapie-berlin.de/sitemap.xml
