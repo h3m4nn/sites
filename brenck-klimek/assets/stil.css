@@ -464,6 +464,8 @@ a[href^="mailto:"], a[href^="tel:"], .kein-umbruch { white-space: nowrap; }
 .merkmal ul { margin: 0; padding-left: 1.2em; max-width: var(--mass); }
 /* Listen in Merkmalen (z. B. Gebäudeinstallation, Software-Entwicklung): Einträge wie in .text leicht getrennt */
 .merkmal li + li { margin-top: .3em; }
+/* Telefonlink im Merkmal („Die Menschen dahinter“): Trefferfläche ≥ 44 px, ohne die Zeile höher zu machen */
+.merkmal a[href^="tel:"] { display: inline-block; padding: .65rem 0; margin: -.65rem 0; }
 
 /* ---------- Kennzahlen (Typenschild) ---------- */
 /* Mindestbreite der Zellen so, dass „Starkdrahtwickelmaschinen“ (≈ 12,5 em) ungebrochen passt */
@@ -602,6 +604,15 @@ a[href^="mailto:"], a[href^="tel:"], .kein-umbruch { white-space: nowrap; }
 .schritte li:last-child::after { display: none; }
 .schritte li:last-child::before { background: var(--orange); color: var(--graphit); }
 
+/* Anfahrt: Schritte links, Kartenbild rechts (statisches Bild aus OpenStreetMap, selbst gehostet; keine eingebettete
+   Karte, nichts von fremden Servern). Google Maps und OpenStreetMap nur als Links. */
+.zweispaltig--anfahrt .schritte { margin-top: 0; }
+.karte-bild { margin: 0; border: 1px solid var(--linie); background: var(--flaeche-2); }
+.karte-bild img { width: 100%; height: auto; aspect-ratio: 3 / 2; object-fit: cover; }
+.karte-bild figcaption { padding: .5rem .75rem; font-size: .875rem; color: var(--text-leise); }
+.anfahrt-karte .aktionen { margin-top: 1.25rem; }
+@media screen and (prefers-color-scheme: dark) { .karte-bild img { filter: brightness(.86) contrast(1.04); } }
+
 /* ---------- Kontaktkarte ---------- */
 .kontaktkarte { background: var(--flaeche-2); border: 1px solid var(--linie); border-top: 4px solid var(--orange); padding: clamp(1.5rem, 1rem + 2vw, 2.25rem); }
 .kontaktkarte__name { margin: 0 0 .5rem; font-size: 1.25rem; font-weight: 700; line-height: 1.3; }
@@ -721,9 +732,12 @@ a[href^="mailto:"], a[href^="tel:"], .kein-umbruch { white-space: nowrap; }
   font-size: min(3.75rem, max(100cqi / 17.4, min(100cqi / 12, 2.25rem)));
 }
 
-/* Typenschild: Felder mit Gravurlinien (1 px Fuge auf Stahl), oben die orange Kante.
-   Breite aus dem Container .held: schmal Bezeichnung über Wert, ab 22 rem Bezeichnung links,
-   ab 36 rem 2 × 2 Felder, ab 60 rem alle vier in einer Reihe. */
+/* Begrüßung über dem Typenschild (seit 28.11.2026 statt der Anschrift im Typenschild, Feedback der Firma) */
+.start-gruss { margin: clamp(1.25rem, 1rem + 1vw, 1.75rem) 0 0; max-width: 34em; font-size: clamp(1.0625rem, 1rem + .35vw, 1.25rem); line-height: 1.55; color: var(--text); }
+
+/* Typenschild: Felder mit Gravurlinien (1 px Fuge auf Stahl), oben die orange Kante. Drei Felder (Gegründet,
+   Telefon, E-Mail). Breite aus dem Container .held: schmal Bezeichnung über Wert, ab 22 rem Bezeichnung links,
+   ab 44 rem alle drei in einer Reihe (darunter passte „info@brenck-klimek.de“ nicht in ein Drittel). */
 .angaben.start-typenschild {
   display: grid; grid-template-columns: minmax(0, 1fr); gap: 1px; max-width: none;
   margin: clamp(1.5rem, 1rem + 1.25vw, 2rem) 0 0;
@@ -739,13 +753,10 @@ a[href^="mailto:"], a[href^="tel:"], .kein-umbruch { white-space: nowrap; }
 @container (min-width: 22rem) {
   .angaben.start-typenschild > div { display: grid; grid-template-columns: 5.75rem minmax(0, 1fr); column-gap: .75rem; align-items: baseline; padding: .7rem 1rem; }
 }
-@container (min-width: 36rem) {
-  .angaben.start-typenschild { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+@container (min-width: 44rem) {
+  .angaben.start-typenschild { grid-template-columns: repeat(3, minmax(0, 1fr)); }
   .angaben.start-typenschild > div { display: flex; padding: .9rem 1.25rem 1rem; }
   .start-typenschild dd { font-size: 1.0625rem; }
-}
-@container (min-width: 60rem) {
-  .angaben.start-typenschild { grid-template-columns: repeat(4, minmax(0, 1fr)); }
 }
 @container (min-width: 72rem) {
   .start-typenschild dd { font-size: 1.1875rem; }
@@ -763,7 +774,9 @@ a[href^="mailto:"], a[href^="tel:"], .kein-umbruch { white-space: nowrap; }
 .start-bild img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
 @media (min-width: 64rem) {
   .start-held { grid-template-columns: minmax(0, 5fr) minmax(0, 7fr); column-gap: 3rem; }
-  .start-held .angaben.start-typenschild { grid-column: 1; grid-row: 3; grid-template-columns: minmax(0, 1fr); }
+  .start-einstieg { grid-column: 1; grid-row: 3; margin-top: clamp(1.5rem, 1rem + 1.25vw, 2rem); }
+  .start-gruss { margin-top: 0; }
+  .start-held .angaben.start-typenschild { grid-template-columns: minmax(0, 1fr); }
   .start-bild { grid-column: 2; grid-row: 3; align-self: stretch; width: 100%; aspect-ratio: 16 / 9; }
 }
 
@@ -867,13 +880,13 @@ a[href^="mailto:"], a[href^="tel:"], .kein-umbruch { white-space: nowrap; }
     .dg-rechts { text-anchor: end; }
 
 /* Aus bilder/gebaeudeinstallation-system.svg (eingebettete Grafik), angehängt von bauen.py */
-/* Zwei Fassungen wie datenerfassung-system.svg: quer (960 x 520) ab 48rem Fensterbreite, darunter hoch (360 x 712).
+/* Zwei Fassungen wie datenerfassung-system.svg: quer (960 x 520) ab 48rem Fensterbreite, darunter hoch (360 x 640).
        Farben nur über --diagramm-linie, -flaeche, -akzent, -text. Orange (dick) = Energiefluss, gestrichelt = KNX-Linie. */
     :root svg.gi-diagramm { display: block; width: 100%; height: auto; aspect-ratio: 960 / 520; }
     svg.gi-diagramm > svg { display: inline; width: 100%; height: 100%; max-width: none; margin: 0; }
     svg.gi-diagramm > svg.gi-hoch { display: none; }
     @media (max-width: 48rem) {
-      :root svg.gi-diagramm { aspect-ratio: 360 / 712; max-width: 26rem; margin-inline: auto; }
+      :root svg.gi-diagramm { aspect-ratio: 360 / 640; max-width: 26rem; margin-inline: auto; }
       svg.gi-diagramm > svg.gi-quer { display: none; }
       svg.gi-diagramm > svg.gi-hoch { display: inline; }
     }

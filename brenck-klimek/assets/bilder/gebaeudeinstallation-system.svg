@@ -1,14 +1,14 @@
 <svg xmlns="http://www.w3.org/2000/svg" class="gi-diagramm" width="960" height="520" role="img" aria-labelledby="gi-titel" aria-describedby="gi-beschreibung">
   <title id="gi-titel">Gebäudeinstallation im Überblick</title>
-  <desc id="gi-beschreibung">Gebäudeumriss mit Photovoltaikmodulen auf dem Dach. Vom Netz führt die Leitung über den Hausanschluss und den Zählerplatz zur Hauptverteilung. In die Hauptverteilung speist die Photovoltaik über den Wechselrichter ein, an dem ein Speicher angeschlossen ist. Die Hauptverteilung versorgt die Wallbox und die Unterverteilungen 1 bis n. Von der Unterverteilung gehen die Stromkreise für Steckdosen, Kraft und Licht ab, der Lichtstromkreis führt zur Beleuchtung innen und außen. Eine KNX-Linie der Gebäudeautomation führt von der Unterverteilung zu Jalousien und Beleuchtung. Zu Daten und Kommunikation gehören Netzwerk, Telefon, TV/SAT und Türsprechanlage.</desc>
+  <desc id="gi-beschreibung">Gebäudeumriss. Vom Netz führt die Leitung über den Hausanschluss und den Zählerplatz zur Hauptverteilung. Die Hauptverteilung versorgt die Unterverteilungen 1 bis n. Von der Unterverteilung gehen die Stromkreise für Steckdosen, Kraft und Licht ab, der Lichtstromkreis führt zur Beleuchtung innen und außen. Eine KNX-Linie der Gebäudeautomation führt von der Unterverteilung zu Jalousien und Beleuchtung. Zu Daten und Kommunikation gehören Netzwerk, Telefon, TV/SAT und Türsprechanlage.</desc>
   <style>
-    /* Zwei Fassungen wie datenerfassung-system.svg: quer (960 x 520) ab 48rem Fensterbreite, darunter hoch (360 x 712).
+    /* Zwei Fassungen wie datenerfassung-system.svg: quer (960 x 520) ab 48rem Fensterbreite, darunter hoch (360 x 640).
        Farben nur über --diagramm-linie, -flaeche, -akzent, -text. Orange (dick) = Energiefluss, gestrichelt = KNX-Linie. */
     :root svg.gi-diagramm { display: block; width: 100%; height: auto; aspect-ratio: 960 / 520; }
     svg.gi-diagramm > svg { display: inline; width: 100%; height: 100%; max-width: none; margin: 0; }
     svg.gi-diagramm > svg.gi-hoch { display: none; }
     @media (max-width: 48rem) {
-      :root svg.gi-diagramm { aspect-ratio: 360 / 712; max-width: 26rem; margin-inline: auto; }
+      :root svg.gi-diagramm { aspect-ratio: 360 / 640; max-width: 26rem; margin-inline: auto; }
       svg.gi-diagramm > svg.gi-quer { display: none; }
       svg.gi-diagramm > svg.gi-hoch { display: inline; }
     }
@@ -39,21 +39,6 @@
     <!-- Gebäude: Satteldach, Wände, Boden -->
     <path class="gi-haus" d="M48 139.5V504H912V139.5"/>
     <path class="gi-dach" d="M24 146 480 22 936 146"/>
-    <!-- Photovoltaik: drei Module auf der linken Dachfläche, Leitung zum Wechselrichter -->
-    <path class="gi-energie" d="M316 58V168"/>
-    <g transform="translate(316 66.6) rotate(-15.21)">
-      <rect class="gi-pv" x="-102" y="-24" width="64" height="18"/>
-      <rect class="gi-pv" x="-32" y="-24" width="64" height="18"/>
-      <rect class="gi-pv" x="38" y="-24" width="64" height="18"/>
-      <path class="gi-zelle" d="M-102 -15H-38M-86 -24V-6M-70 -24V-6M-54 -24V-6M-32 -15H32M-16 -24V-6M0 -24V-6M16 -24V-6M38 -15H102M54 -24V-6M70 -24V-6M86 -24V-6"/>
-    </g>
-    <text class="gi-schrift" x="330" y="142">Photovoltaik</text>
-    <!-- Erzeugung und Speicher -->
-    <path class="gi-energie" d="M208 192H240M316 216V256"/>
-    <rect class="gi-kasten" x="72" y="168" width="136" height="48" rx="3"/>
-    <rect class="gi-kasten" x="240" y="168" width="152" height="48" rx="3"/>
-    <text class="gi-schrift gi-fett gi-mitte" x="140" y="197.5">Speicher</text>
-    <text class="gi-schrift gi-fett gi-mitte" x="316" y="197.5">Wechselrichter</text>
     <!-- Netz, Hausanschluss, Zählerplatz, Hauptverteilung -->
     <path class="gi-energie" d="M0 380H72M140 356V312M208 284H240"/>
     <text class="gi-schrift gi-klein" x="8" y="371">Netz</text>
@@ -63,10 +48,6 @@
     <text class="gi-schrift gi-fett gi-mitte" x="140" y="385.5">Hausanschluss</text>
     <text class="gi-schrift gi-fett gi-mitte" x="140" y="289.5">Zählerplatz</text>
     <text class="gi-schrift gi-fett gi-mitte" x="316" y="289.5">Hauptverteilung</text>
-    <!-- Wallbox an der Hauptverteilung -->
-    <path class="gi-leitung" d="M316 312V356"/>
-    <rect class="gi-kasten" x="240" y="356" width="152" height="48" rx="3"/>
-    <text class="gi-schrift gi-fett gi-mitte" x="316" y="385.5">Wallbox</text>
     <!-- Hauptverteilung zu den Unterverteilungen -->
     <path class="gi-energie" d="M392 284H420V380"/>
     <path class="gi-stich" d="M420 284H448M420 380H448"/>
@@ -110,26 +91,12 @@
   </svg>
 
   <!-- Hochformat (schmale Fenster) -->
-  <svg class="gi-hoch" viewBox="0 0 360 712" width="100%" height="100%" aria-hidden="true">
-    <rect class="gi-grund" width="360" height="712"/>
+  <svg class="gi-hoch" viewBox="0 0 360 640" width="100%" height="100%" aria-hidden="true">
+    <rect class="gi-grund" width="360" height="640"/>
     <!-- Gebäude -->
-    <path class="gi-haus" d="M10 92.2V696H318V92.2"/>
+    <path class="gi-haus" d="M10 92.2V624H318V92.2"/>
     <path class="gi-dach" d="M2 96 164 20 326 96"/>
-    <!-- Photovoltaik -->
-    <path class="gi-energie" d="M100 44V116"/>
-    <g transform="translate(100 50) rotate(-25.13)">
-      <rect class="gi-pv" x="-56" y="-18" width="34" height="14"/>
-      <rect class="gi-pv" x="-17" y="-18" width="34" height="14"/>
-      <rect class="gi-pv" x="22" y="-18" width="34" height="14"/>
-      <path class="gi-zelle" d="M-56 -11H-22M-44.7 -18V-4M-33.3 -18V-4M-17 -11H17M-5.7 -18V-4M5.7 -18V-4M22 -11H56M33.3 -18V-4M44.7 -18V-4"/>
-    </g>
-    <text class="gi-schrift gi-klein" x="112" y="102">Photovoltaik</text>
-    <!-- Erzeugung und Speicher -->
-    <path class="gi-energie" d="M184 134H164M100 152V180"/>
-    <rect class="gi-kasten" x="36" y="116" width="128" height="36" rx="3"/>
-    <rect class="gi-kasten" x="184" y="116" width="120" height="36" rx="3"/>
-    <text class="gi-schrift gi-fett gi-klein gi-mitte" x="100" y="139">Wechselrichter</text>
-    <text class="gi-schrift gi-fett gi-klein gi-mitte" x="244" y="139">Speicher</text>
+    <g transform="translate(0 -72)">
     <!-- Netz, Hausanschluss, Zählerplatz, Hauptverteilung -->
     <path class="gi-energie" d="M360 266H304M244 248V220M184 200H164"/>
     <text class="gi-schrift gi-klein gi-rechts" x="356" y="257">Netz</text>
@@ -139,10 +106,6 @@
     <text class="gi-schrift gi-fett gi-klein gi-mitte" x="100" y="205">Hauptverteilung</text>
     <text class="gi-schrift gi-fett gi-klein gi-mitte" x="244" y="205">Zählerplatz</text>
     <text class="gi-schrift gi-fett gi-klein gi-mitte" x="244" y="271">Hausanschluss</text>
-    <!-- Wallbox -->
-    <path class="gi-leitung" d="M100 220V248"/>
-    <rect class="gi-kasten" x="36" y="248" width="128" height="36" rx="3"/>
-    <text class="gi-schrift gi-fett gi-klein gi-mitte" x="100" y="271">Wallbox</text>
     <!-- Hauptverteilung zu den Unterverteilungen -->
     <path class="gi-energie" d="M36 200H22V432"/>
     <path class="gi-stich" d="M22 348H36M22 432H36"/>
@@ -183,5 +146,6 @@
     <text class="gi-schrift gi-klein gi-mitte" x="236" y="615">Telefon</text>
     <text class="gi-schrift gi-klein gi-mitte" x="100" y="657">TV/SAT</text>
     <text class="gi-schrift gi-klein gi-mitte" x="236" y="657">Türsprechanlage</text>
+    </g>
   </svg>
 </svg>
